@@ -1,0 +1,25 @@
+{
+  "name": "obstacle",
+  "version": "1.0.0",
+  "description": "Web App which helps you to accomplish your objectives",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://oauth2:6GvPBSGVVEXV_nfzhfmR@gitlab.esiea.fr/intech/2021m/s04-il/obstacle"
+  },
+  "author": "Allane VONG, François LE FUR, Mandiaye BADIANE",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
