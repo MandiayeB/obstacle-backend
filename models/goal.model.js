@@ -33,6 +33,10 @@ class Goal {
         console.log('Objectif enregistré !');
     }
 
+    /**
+     * @param {Number} userId
+     * @returns {Promise<Goal>}
+     */
     static async getGoals(user_id) {
         const res = await PostgresClient.client.query(
             `SELECT ${Goal.tableName}.id, ${Goal.tableName}.creation_date,
@@ -47,6 +51,15 @@ class Goal {
             WHERE user_id = $1`,
         [user_id]);
         return res.rows;
+    }
+
+    /**
+     * @param {Number} goal_id
+     */
+    static async delete(goal_id) {
+        const { title } = await this.getGoals(userId);
+        const res = await PostgresClient.client.query(`DELETE FROM ${Goal.tableName} WHERE id = $1`, [goal_id]);
+        console.log(`L'objectif ${title} a été supprimé`);
     }
 
     static toSQLTable() {

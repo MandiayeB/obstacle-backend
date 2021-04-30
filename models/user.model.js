@@ -29,7 +29,7 @@ class User {
      */
     static async getById(userId) {
         const res = await PostgresClient.client.query(`SELECT * FROM ${User.tableName} WHERE id = $1`, [userId]);
-        console.log(res.rows[0]);
+        return res.rows[0];
     }
 
     /**
@@ -38,7 +38,7 @@ class User {
      */
     static async findByEmail(email) {
         const res = await PostgresClient.client.query(`SELECT * FROM ${User.tableName} WHERE email = $1`, [email]);
-        console.log(res.rows[0]);
+        return res.rows[0];
     }
 
     /**
@@ -62,9 +62,9 @@ class User {
      * @param {Number} userId
      */
     static async delete(userId) {
-        const userName = this.getUserName(userId);
+        const { firstName } = this.getById(userId);
         const res = await PostgresClient.client.query(`DELETE FROM ${User.tableName} WHERE id = $1`, [userId]);
-        console.log(`L'utilisateur : ${userName} a été supprimé`);
+        console.log(`L'utilisateur : ${firstName} a été supprimé`);
     }
 
     /**
@@ -72,20 +72,10 @@ class User {
      * @param {String} password
      */
     static async updatePassword(userId, password) {
-        const userName = this.getUserName(userId);
+        const { firstName } = this.getById(userId);
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName} 
             SET password = $1 WHERE id = $2`, [password, userId]);
-        console.log(`Le mot de passe de ${userName} a été modifié`);
-    }
-
-    /**
-     * @param {Number} userId
-     * @returns {String}
-     */
-    static async getUserName(userId) {
-        const userName = await PostgresClient.client
-        .query(`SELECT firstname FROM ${User.tableName} WHERE id = $1`, [userId]);
-        return (userName['rows'][0]['firstname']);
+        console.log(`Le mot de passe de ${firstName} a été modifié`);
     }
 
     static toSQLTable() {
