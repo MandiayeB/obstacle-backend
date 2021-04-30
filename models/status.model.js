@@ -11,7 +11,6 @@ class Status {
      * @param {String} role
      */
      static async create(role) {
-
         const text = `INSERT INTO ${Status.tableName}(role) VALUES($1)`;
         const values = [role];
         const res = await PostgresClient.client.query(text, values);
