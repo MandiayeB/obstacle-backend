@@ -39,7 +39,7 @@ class User {
      */
     static async findByEmail(email) {
         const res = await PostgresClient.client.query(`
-            SELECT firstname, lastname, email, password, ${Status.tableName}.status FROM ${User.tableName} 
+            SELECT ${User.tableName}.id AS user_id, firstname, lastname, email, password, ${Status.tableName}.role FROM ${User.tableName} 
             INNER JOIN ${Status.tableName} ON ${User.tableName}.status_id = ${Status.tableName}.id
             WHERE email = $1`,
         [email]);
