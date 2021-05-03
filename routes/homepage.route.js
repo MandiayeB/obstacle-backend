@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Goal = require('../models/goal.model');
+const isAuthenticated = require('../middlewares/isAuthenticated');
 
-router.get('/', async(req,res) => {
+router.get('/', isAuthenticated, async(req,res) => {
     const goals = await Goal.getGoals(req.session.user_id);
     res.json(goals);
 })

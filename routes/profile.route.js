@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
+const isAuthenticated = require('../middlewares/isAuthenticated');
 
-router.get('/', async(req,res) => {
-    const user = await User.getById(req.session.user_id);
-    res.json(user);
+router.get('/', isAuthenticated, async(req,res) => {
+    res.json(req.session);
 });
 
-router.put('/', async(req,res) => {
+router.put('/', isAuthenticated, async(req,res) => {
     const modify_creds = await User.updatePassword(req.body.password);
     res.json(modify_creds);
 });
