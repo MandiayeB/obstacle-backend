@@ -12,7 +12,7 @@ router.post('/create', async(req,res) => {
     res.json(create_goal);
 });
 
-router.delete('/goal', async(req,res) => {
+router.delete('/', async(req,res) => {
     const delete_goal = await Goal.delete(req.body.goal_id);
     res.json(delete_goal);
 });

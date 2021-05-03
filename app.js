@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use('/', homepageRouter);
 app.use('/profile', profileRouter);
-app.use('/', goalRouter);
+app.use('/goal', goalRouter);
 
 app.listen(port, () => {
     console.log('Express server is up!');
