@@ -3,7 +3,7 @@ const session = require('express-session');
 const PostgresClient = require('./PostgresClient');
 const homepageRouter = require('./routes/homepage.route');
 const profileRouter = require('./routes/profile.route');
-const goalRouter = require('/routes/goal.route');
+const goalRouter = require('./routes/goal.route');
 
 const app = express();
 const port = process.env.PORT || 3000;
