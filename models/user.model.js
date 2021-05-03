@@ -28,7 +28,7 @@ class User {
      * @returns {Promise<User>}
      */
     static async getById(userId) {
-        const res = await PostgresClient.client.query(`SELECT * FROM ${User.tableName} WHERE id = $1`, [userId]);
+        const res = await PostgresClient.client.query(`SELECT firstname, lastname, email, status_id FROM ${User.tableName} WHERE id = $1`, [userId]);
         return res.rows[0];
     }
 
