@@ -12,13 +12,13 @@ router.post('/', async(req, res) => {
                 req.session.authenticated = true;
                 delete credentials.password;
                 req.session.credentials = credentials;
-                res.json(req.session);
+                res.redirect(301, '/');
             } else {
-                res.status(403).json({ msg: 'Wrong Credentials' });
+                res.status(403).json({ msg: 'Wrong Credentials.' });
             }
         }
     } else {
-        res.status(403).json({ msg: 'Wrong Credentials' });
+        res.status(403).json({ msg: 'Wrong Credentials.' });
     }
 });
 
