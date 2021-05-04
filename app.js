@@ -5,7 +5,7 @@ const homepageRouter = require('./routes/homepage.route');
 const profileRouter = require('./routes/profile.route');
 const goalRouter = require('./routes/goal.route');
 const connectionRouter = require('./routes/connection.route');
-const inscriptionRouter = require('./routes/inscription.route');
+const registrationRouter = require('./routes/registration.route');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,7 +25,7 @@ app.use('/', homepageRouter);
 app.use('/profile', profileRouter);
 app.use('/goal', goalRouter);
 app.use('/login', connectionRouter);
-app.use('/signin', inscriptionRouter);
+app.use('/signin', registrationRouter);
 
 app.listen(port, () => {
     console.log('Express server is up!');
