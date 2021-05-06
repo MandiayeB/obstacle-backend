@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user.model');
 
 router.get('/', async(req,res) => {
-    const user = await User.getById(req.session.user_id);
+    const user = await User.getById(1);
     res.json(user);
 });
 
