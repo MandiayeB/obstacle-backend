@@ -1,4 +1,5 @@
 const PostgresClient = require('../PostgresClient');
+const Status = require('../models/status.model');
 
 class User {
 
@@ -37,7 +38,11 @@ class User {
      * @returns {Promise<User>}
      */
     static async findByEmail(email) {
-        const res = await PostgresClient.client.query(`SELECT * FROM ${User.tableName} WHERE email = $1`, [email]);
+        const res = await PostgresClient.client.query(`
+            SELECT ${User.tableName}.id AS user_id, firstname, lastname, email, password, ${Status.tableName}.role FROM ${User.tableName} 
+            INNER JOIN ${Status.tableName} ON ${User.tableName}.status_id = ${Status.tableName}.id
+            WHERE email = $1`,
+        [email]);
         return res.rows[0];
     }
 
