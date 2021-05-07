@@ -8,6 +8,7 @@ const Difficulty = require('./models/difficulty.model');
 const Goal = require('./models/goal.model');
 const DailyContent = require('./models/dailycontent.model');
 const GoalDailyContent = require('./models/goal_dailycontent.model');
+const Achievement = require('./models/achievement.model');
 
 const models = [
     Status,
@@ -18,7 +19,8 @@ const models = [
     Difficulty,
     Goal,
     DailyContent,
-    GoalDailyContent
+    GoalDailyContent,
+    Achievement
 ];
 
 async function createDb() {
@@ -49,6 +51,7 @@ async function sampleData() {
     await Goal.create(date, date + 30 * 24*60*60*1000, 1, 3);
     await DailyContent.create('Cours plus vite', 1, 3);
     await GoalDailyContent.create(true, 1, 1);
+    await Achievement.create('J\'ai bien couru aujourd\'hui !', 1);
 }
 
 async function run() {

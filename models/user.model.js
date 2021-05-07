@@ -99,5 +99,5 @@ class User {
         `;
     }
 }
-User.tableName = 'users'
-module.exports = User
+User.tableName = 'users';
+module.exports = User;
