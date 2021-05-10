@@ -12,7 +12,7 @@ router.post('/', async(req, res) => {
                 req.session.authenticated = true;
                 delete credentials.password;
                 req.session.credentials = credentials;
-                res.redirect(301, '/');
+                res.status(301).json({msg : 'Accepter'}); //Il crash si l'adresse mail d'existe pas
             } else {
                 res.status(403).json({ msg: 'Wrong Credentials.' });
             }
