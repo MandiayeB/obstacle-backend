@@ -8,11 +8,15 @@ router.post('/', async(req, res) => {
             res.json(req.session);
         } else {
             const credentials = await User.findByEmail(email);
-            if (password === credentials.password) {
-                req.session.authenticated = true;
-                delete credentials.password;
-                req.session.credentials = credentials;
-                res.status(301).json({msg : 'Accepter'}); //Il crash si l'adresse mail d'existe pas
+            if (credentials) {
+                if (password === credentials.password) {
+                    req.session.authenticated = true;
+                    delete credentials.password;
+                    req.session.credentials = credentials;
+                    res.status(308);
+                } else {
+                    res.status(403).json({ msg: 'Wrong Credentials.' });
+                }
             } else {
                 res.status(403).json({ msg: 'Wrong Credentials.' });
             }
