@@ -40,7 +40,7 @@ async function deleteDb() {
 async function sampleData() {
 
     Status.create('Admin');
-    await User.create('Mandiaye', 'Badiane', 'mandiaye@gmail.com', 'oui', 1);
+    await User.create('Mandiaye', 'Badiane', 'mandiaye@gmail.com', 'oui', 'Homme', '1999-04-02', 1);
     await Theme.create('Sport');
     await Activity.create('Athlétisme', 1);
     await Challenge.create('Course', 1, 1);

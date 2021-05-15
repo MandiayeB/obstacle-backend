@@ -13,6 +13,10 @@ class User {
     email;
     /**@type {String} */
     password;
+    /**@type {String} */
+    gender;
+    /**@type {Date} */
+    birthdate;
     /**@type {Number} */
     status_id;
 
@@ -39,7 +43,7 @@ class User {
      */
     static async findByEmail(email) {
         const res = await PostgresClient.client.query(`
-            SELECT ${User.tableName}.id AS user_id, firstname, lastname, email, password, ${Status.tableName}.role FROM ${User.tableName} 
+            SELECT ${User.tableName}.id AS user_id, firstname, lastname, email, password, gender, birthdate, ${Status.tableName}.role FROM ${User.tableName} 
             INNER JOIN ${Status.tableName} ON ${User.tableName}.status_id = ${Status.tableName}.id
             WHERE email = $1`,
         [email]);
@@ -51,13 +55,15 @@ class User {
      * @param {String} lastname
      * @param {String} email
      * @param {String} password
+     * @param {String} gender
+     * @param {Date} birthdate
      * @param {Number} status_id
      */
-    static async create(firstname, lastname, email, password, status_id) {
+    static async create(firstname, lastname, email, password, gender, birthdate, status_id) {
 
-        const text = `INSERT INTO ${User.tableName}(firstname, lastname, email, password, status_id) 
-                        VALUES($1, $2, $3, $4, $5)`;
-        const values = [firstname, lastname, email, password, status_id];
+        const text = `INSERT INTO ${User.tableName}(firstname, lastname, email, password, gender, birthdate, status_id) 
+                        VALUES($1, $2, $3, $4, $5, $6, $7)`;
+        const values = [firstname, lastname, email, password, gender, birthdate, status_id];
 
         const res = await PostgresClient.client.query(text, values);
         console.log('Utilisateur enregistré !');
@@ -91,6 +97,8 @@ class User {
                 lastname VARCHAR(255),
                 email VARCHAR(255),
                 password VARCHAR(255),
+                gender VARCHAR(255),
+                birthdate DATE,
                 status_id INTEGER,
                 CONSTRAINT fk_status_id
                     FOREIGN KEY(status_id)
