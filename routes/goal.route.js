@@ -1,7 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Goal = require('../models/goal.model');
+const Challenge = require('../models/challenge.model');
 const isAuthenticated = require('../middlewares/isAuthenticated');
+
+
+router.get('/', async(req,res) => {
+    const show_options = await Challenge.showOptions();
+    res.json(show_options);
+});
 
 router.post('/create', isAuthenticated, async(req,res) => {
     const create_goal = await Goal.create(
