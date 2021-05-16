@@ -2,38 +2,7 @@ const PostgresClient = require('../PostgresClient');
 const Theme = require('./theme.model');
 const Activity = require('./activity.model');
 const Difficulty = require('./difficulty.model');
-theme = [
-    {
-        name: 'Sport',
-        activity: [
-            {
-                name: 'Basketball',
-                challenge: [
-                    {
-                        name: 'Apprendre à tirer',
-                        difficulty: [
-                            {
-                                title: "Le lancer franc",
-                                image: "https://media.giphy.com/media/3o7TKN14IiSp9ciYQE/giphy.gif",
-                                length: 10,
-                            },
-                            {
-                                title: "Tirer à mi-distance",
-                                image: "https://media.giphy.com/media/3oz8xMYmD6g5xbCSHu/giphy.gif",
-                                length: 20,
-                            },
-                            {
-                                title: "Shooter à 3 points",
-                                image: "https://media.giphy.com/media/xT1XGCwOkQ2Ua5Zv5C/giphy.gif",
-                                length: 30,
-                            },
-                        ],
-                    }
-                ],
-            }
-        ],
-    },
-];
+
 class Challenge {
 
     /**@type {Number} */
