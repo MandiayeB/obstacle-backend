@@ -5,22 +5,22 @@ class Challenge {
     /**@type {Number} */
     id;
     /**@type {String} */
-    challenge;
+    name;
     /**@type {Number} */
     author;
     /**@type {Number} */
     activity_id;
 
     /**
-     * @param {String} challenge
+     * @param {String} name
      * @param {Number} author
      * @param {Number} activity_id
      */
-     static async create(challenge, author, activity_id) {
+     static async create(name, author, activity_id) {
 
-        const text = `INSERT INTO ${Challenge.tableName}(challenge, author, activity_id) 
+        const text = `INSERT INTO ${Challenge.tableName}(name, author, activity_id) 
             VALUES($1, $2, $3)`;
-        const values = [challenge, author, activity_id];
+        const values = [name, author, activity_id];
         const res = await PostgresClient.client.query(text, values);
         console.log('Challenge enregistré !');
     }
@@ -29,7 +29,7 @@ class Challenge {
         return `
             CREATE TABLE ${Challenge.tableName} (
                 id SERIAL PRIMARY KEY,
-                challenge VARCHAR(255),
+                name VARCHAR(255),
                 author INTEGER,
                 activity_id INTEGER,
                 CONSTRAINT fk_author

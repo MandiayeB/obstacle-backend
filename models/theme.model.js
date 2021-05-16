@@ -5,15 +5,15 @@ class Theme {
     /**@type {Number} */
     id;
     /**@type {String} */
-    theme;
+    name;
 
     /**
-     * @param {String} theme
+     * @param {String} name
      */
-     static async create(theme) {
+     static async create(name) {
 
-        const text = `INSERT INTO ${Theme.tableName}(theme) VALUES($1)`;
-        const values = [theme];
+        const text = `INSERT INTO ${Theme.tableName}(name) VALUES($1)`;
+        const values = [name];
         const res = await PostgresClient.client.query(text, values);
         console.log('Thème enregistré !');
     }
@@ -22,7 +22,7 @@ class Theme {
         return `
             CREATE TABLE ${Theme.tableName} (
                 id SERIAL PRIMARY KEY,
-                theme VARCHAR(255)
+                name VARCHAR(255)
             );
         `;
     }

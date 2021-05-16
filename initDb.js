@@ -42,11 +42,29 @@ async function sampleData() {
     Status.create('Admin');
     await User.create('Mandiaye', 'Badiane', 'mandiaye@gmail.com', 'oui', 'Homme', '1999-04-02', 1);
     await Theme.create('Sport');
-    await Activity.create('Athlétisme', 1);
-    await Challenge.create('Course', 1, 1);
-    await Difficulty.create(1, '10km', 1);
-    await Difficulty.create(2, 'Semi-Marathon', 1);
-    await Difficulty.create(3, 'Marathon', 1);
+    await Activity.create('Basketball', 1);
+    await Challenge.create('Apprendre à tirer', 1, 1);
+    await Difficulty.create(
+        1, 
+        'Le lancer franc',
+        'https://media.giphy.com/media/3o7TKN14IiSp9ciYQE/giphy.gif',
+        10,
+        1
+    );
+    await Difficulty.create(
+        2,
+        'Tirer à mi-distance',
+        'https://media.giphy.com/media/3oz8xMYmD6g5xbCSHu/giphy.gif',
+        20,
+        1
+    );
+    await Difficulty.create(
+        3, 
+        'Shooter à 3 points', 
+        'https://media.giphy.com/media/xT1XGCwOkQ2Ua5Zv5C/giphy.gif',
+        30,
+        1
+    );
     date = Date.now();
     await Goal.create(date, date + 30 * 24*60*60*1000, 1, 3);
     await DailyContent.create('Cours plus vite', 1, 3);

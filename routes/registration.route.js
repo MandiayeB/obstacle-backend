@@ -19,7 +19,7 @@ router.post('/', async(req, res) => {
                 req.session.authenticated = true;
                 delete credentials.password;
                 req.session.credentials = credentials;
-                res.status(308).send("Valid informations, redirecting to homepage");
+                res.status(308).send("Valid informations, redirecting to connection page");
             } else {
                 res.status(403).json({ msg: 'Password do not match password confirmation.' });
             }

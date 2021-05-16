@@ -8,19 +8,25 @@ class Difficulty {
     level;
     /**@type {String} */
     title;
+    /**@type {String} */
+    image;
+    /**@type {Number} */
+    length;
     /**@type {Number} */
     challenge_id;
 
     /**
      * @param {Number} level
      * @param {String} title
+     * @param {String} image
+     * @param {Number} length
      * @param {Number} challenge_id
      */
-     static async create(level, title, challenge_id) {
+     static async create(level, title, image, length, challenge_id) {
 
-        const text = `INSERT INTO ${Difficulty.tableName}(level, title, challenge_id) 
-            VALUES($1, $2, $3)`;
-        const values = [level, title, challenge_id];
+        const text = `INSERT INTO ${Difficulty.tableName}(level, title, image, length, challenge_id) 
+            VALUES($1, $2, $3, $4, $5)`;
+        const values = [level, title, image, length, challenge_id];
         const res = await PostgresClient.client.query(text, values);
         console.log('Difficulté enregistrée !');
     }
@@ -31,6 +37,8 @@ class Difficulty {
                 id SERIAL PRIMARY KEY,
                 level INTEGER,
                 title VARCHAR(255),
+                image VARCHAR(255),
+                length INTEGER,
                 challenge_id INTEGER,
                 CONSTRAINT fk_challenge_id
                     FOREIGN KEY(challenge_id)
