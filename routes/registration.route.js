@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 
 router.post('/', async(req, res) => {
 
-    const { firstname,lastname,email,password,pw_confirmation,birthdate,gender } = req.body;
+    const { firstname,lastname,email,password,pw_confirmation,gender,birthdate } = req.body;
 
     if (firstname && lastname && email && password && pw_confirmation && gender && birthdate) {
         console.log("We're in");
