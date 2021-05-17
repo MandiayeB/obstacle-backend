@@ -34,7 +34,7 @@ class Challenge {
     static async showOptions() {
         const res = await PostgresClient.client.query(`
             SELECT
-                json_agg(json_build_object(
+                (SELECT json_agg(json_build_object(
                     'name', ${Theme.tableName}.name,
                     'activity', (SELECT json_agg(json_build_object(
                         'name', ${Activity.tableName}.name,
@@ -45,11 +45,12 @@ class Challenge {
                                 'level', ${Difficulty.tableName}.level, 
                                 'title', ${Difficulty.tableName}.title, 
                                 'image', ${Difficulty.tableName}.image, 
-                                'length', ${Difficulty.tableName}.length
+                                'length', ${Difficulty.tableName}.length,
+                                'difficulty', ${Difficulty.tableName}.difficulty
                             )) FROM ${Difficulty.tableName})
                         )) FROM ${Challenge.tableName})
                     )) FROM ${Activity.tableName})
-                )) AS theme
+                )) AS theme FROM ${Theme.tableName})
 
             FROM ${Challenge.tableName}
 
@@ -57,7 +58,7 @@ class Challenge {
             INNER JOIN ${Activity.tableName} ON ${Challenge.tableName}.activity_id = ${Activity.tableName}.id
             INNER JOIN ${Theme.tableName} ON ${Activity.tableName}.theme_id = ${Theme.tableName}.id
         `);
-        return res.rows[0].theme[0];
+        return res.rows[0].theme;
     }
 
     static toSQLTable() {

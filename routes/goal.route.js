@@ -10,7 +10,7 @@ router.get('/', async(req,res) => {
     res.json(show_options);
 });
 
-router.post('/create', isAuthenticated, async(req,res) => {
+router.post('/', isAuthenticated, async(req,res) => {
     const create_goal = await Goal.create(
         req.body.creation_date, 
         req.body.supposed_end_date, 

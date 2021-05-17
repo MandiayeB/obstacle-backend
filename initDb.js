@@ -49,6 +49,7 @@ async function sampleData() {
         'Le lancer franc',
         'https://media.giphy.com/media/3o7TKN14IiSp9ciYQE/giphy.gif',
         10,
+        'facile',
         1
     );
     await Difficulty.create(
@@ -56,13 +57,15 @@ async function sampleData() {
         'Tirer à mi-distance',
         'https://media.giphy.com/media/3oz8xMYmD6g5xbCSHu/giphy.gif',
         20,
+        'moyenne',
         1
     );
     await Difficulty.create(
         3, 
-        'Shooter à 3 points', 
+        'Tirer à 3 points', 
         'https://media.giphy.com/media/xT1XGCwOkQ2Ua5Zv5C/giphy.gif',
         30,
+        'difficile',
         1
     );
     date = Date.now();
