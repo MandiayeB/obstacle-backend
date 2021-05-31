@@ -1,20 +1,22 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 
 router.post('/', async(req, res) => {
 
     const { firstname,lastname,email,password,pw_confirmation,gender,birthdate } = req.body;
+    const hashPassword = await bcrypt.hash(password,10);
 
     if (firstname && lastname && email && password && pw_confirmation && gender && birthdate) {
         console.log("We're in");
-        console.log(firstname, lastname, email, password, pw_confirmation, gender, birthdate);
+        console.log(firstname, lastname, email, hashPassword, pw_confirmation, gender, birthdate);
         if (await User.findByEmail(email)) {
             res.status(403).json({ msg: 'This email is already used.' });
 
         } else {
 
             if (password === pw_confirmation) {
-                const createUser = await User.create(firstname, lastname, email, password, gender, birthdate, 1);
+                const createUser = await User.create(firstname, lastname, email, hashPassword, gender, birthdate, 1);
                 const credentials = await User.findByEmail(email);
                 req.session.authenticated = true;
                 delete credentials.password;

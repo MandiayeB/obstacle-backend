@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/user.model');
+const bcrypt = require('bcrypt');
 
 router.post('/', async(req, res) => {
     const { email, password } = req.body;
@@ -9,7 +10,8 @@ router.post('/', async(req, res) => {
         } else {
             const credentials = await User.findByEmail(email);
             if (credentials) {
-                if (password === credentials.password) {
+                const isMatch = await bcrypt.compare(password,credentials.password);
+                if (isMatch) {
                     req.session.authenticated = true;
                     delete credentials.password;
                     req.session.credentials = credentials;
