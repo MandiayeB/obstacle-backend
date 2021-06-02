@@ -61,19 +61,20 @@ async function sampleData() {
         1
     );
     await Difficulty.create(
-        3, 
+        3,
         'Tirer à 3 points', 
         'https://media.giphy.com/media/xT1XGCwOkQ2Ua5Zv5C/giphy.gif',
         30,
         'difficile',
         1
     );
+    await DailyContent.create('Cours plus vite1', 1, 3);
+    await DailyContent.create('Cours plus vite2', 1, 3);
+    await DailyContent.create('Cours plus vite3', 1, 3);
+    await DailyContent.create('Cours plus vite4', 1, 3);
+    await DailyContent.create('Cours plus vite5', 1, 3);
     date = Date.now();
-    await Goal.create(date, date + 30 * 24*60*60*1000, 1, 3);
-    await DailyContent.create('Cours plus vite', 1, 3);
-    await GoalDailyContent.create(true, 1, 1);
-    date = Date.now();
-    await Achievement.create('J\'ai bien couru aujourd\'hui !', date, 1);
+    //await Achievement.create('J\'ai bien couru aujourd\'hui !', date, 1);
 }
 
 async function run() {

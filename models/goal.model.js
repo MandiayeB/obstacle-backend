@@ -27,10 +27,11 @@ class Goal {
     static async create(creation_date, supposed_end_date, user_id, difficulty_id) {
         const text = `INSERT INTO ${Goal.tableName}
             (creation_date, supposed_end_date, user_id, difficulty_id) 
-            VALUES(to_timestamp($1/1000.0), to_timestamp($2/1000.0), $3, $4)`;
+            VALUES(to_timestamp($1/1000.0), to_timestamp($2/1000.0), $3, $4)
+            RETURNING id, difficulty_id`;
         const values = [creation_date, supposed_end_date, user_id, difficulty_id];
         const res = await PostgresClient.client.query(text, values);
-        console.log('Objectif enregistré !');
+        return res.rows[0];
     }
 
     /**
@@ -51,6 +52,21 @@ class Goal {
             WHERE user_id = $1`,
         [user_id]);
         return res.rows;
+    }
+
+    /**
+     * @param {Number} userId
+     * @param {Number} difficulty_id
+     * @returns {Promise<Goal>}
+     */
+     static async checkExistingGoals(user_id, difficulty_id) {
+        const res = await PostgresClient.client.query(
+            `SELECT * FROM ${Goal.tableName} 
+            WHERE user_id = $1 
+            AND difficulty_id = $2`, 
+            [user_id, difficulty_id]
+        );
+        return res.rows[0];
     }
 
     /**
