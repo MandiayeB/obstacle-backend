@@ -16,13 +16,20 @@ class DailyContent {
      * @param {Number} order
      * @param {Number} difficulty_id
      */
-      static async create(content, order, difficulty_id) {
-
+     static async create(content, order, difficulty_id) {
         const text = `INSERT INTO ${DailyContent.tableName}(content, order_index, difficulty_id) 
             VALUES($1, $2, $3)`;
         const values = [content, order, difficulty_id];
         const res = await PostgresClient.client.query(text, values);
         console.log('Défi journalier enregistré !');
+    }
+
+    /**
+     * @param {Number} id
+     */
+    static async getByDiffId(id) {
+        const res = await PostgresClient.client.query(`SELECT id FROM ${DailyContent.tableName} WHERE difficulty_id = $1`, [id]);
+        return res.rows;
     }
 
     static toSQLTable() {

@@ -34,6 +34,14 @@ class Difficulty {
         console.log('Difficulté enregistrée !');
     }
 
+    /**
+     * @param {Number} id
+     */
+    static async getById(id) {
+        const res = await PostgresClient.client.query(`SELECT id, length FROM ${Difficulty.tableName} WHERE id = $1`, [id]);
+        return res.rows[0];
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${Difficulty.tableName} (

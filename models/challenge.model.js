@@ -29,7 +29,7 @@ class Challenge {
     }
 
     /**
-     * @returns {Promise<Challenge>}
+     * @returns {Promise<JSON>}
      */
     static async showOptions() {
         const res = await PostgresClient.client.query(`
