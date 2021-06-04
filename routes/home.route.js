@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Goal = require('../models/goal.model');
-const isAuthenticated = require('../middlewares/isAuthenticated');
+const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
 
-router.get('/', isAuthenticated, async(req,res) => {
+router.get('/', hasToBeAuthenticated, async(req,res) => {
+    console.log(req.session);
     const goals = await Goal.getGoals(req.session.credentials.user_id);
     res.json(goals);
 });
