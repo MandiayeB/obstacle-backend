@@ -43,7 +43,6 @@ class Goal {
             `SELECT ${Goal.tableName}.id, ${Difficulty.tableName}.title,
             ${Difficulty.tableName}.image FROM ${Goal.tableName}
             INNER JOIN ${Difficulty.tableName} ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
-            INNER JOIN ${User.tableName} ON ${Goal.tableName}.user_id = ${User.tableName}.id
             WHERE user_id = $1`,
         [user_id]);
         return res.rows;
