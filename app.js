@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const PostgresClient = require('./PostgresClient');
-const homepageRouter = require('./routes/homepage.route');
+const homeRouter = require('./routes/home.route');
 const profileRouter = require('./routes/profile.route');
 const goalRouter = require('./routes/goal.route');
 const connectionRouter = require('./routes/connection.route');
@@ -15,15 +15,14 @@ PostgresClient.init().then(() => console.log("Connected to Postgres Db!"));
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({ origin: [`http://localhost:${port}`, `http://localhost:8080`], credentials: true }));
 app.use(session({
     secret: 'my secret',
-    cookie: { maxAge: 30000 },
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false,
 }));
 
-app.use('/', homepageRouter);
+app.use('/', homeRouter);
 app.use('/profile', profileRouter);
 app.use('/goal', goalRouter);
 app.use('/login', connectionRouter);
