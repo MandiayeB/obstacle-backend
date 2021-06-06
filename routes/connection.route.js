@@ -17,14 +17,14 @@ router.post('/', async(req, res) => {
                     req.session.credentials = credentials;
                     res.status(308).send(req.session.credentials);
                 } else {
-                    res.status(403).json({ msg: 'Wrong Credentials.' });
+                    res.status(403).json({ msg: 'Les informations ne correspondent pas.' });
                 }
             } else {
-                res.status(403).json({ msg : 'Wrong Credentials.' });
+                res.status(403).json({ msg : 'Les informations ne correspondent pas.' });
             }
         }
     } else {
-        res.status(403).json({ msg: 'Wrong Credentials.' });
+        res.status(403).json({ msg: 'Les informations ne correspondent pas.' });
     }
 });
 
