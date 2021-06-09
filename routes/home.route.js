@@ -8,4 +8,9 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
     res.json(goals);
 });
 
+router.post('/', hasToBeAuthenticated, async(req, res) => {
+    req.session.goal_id = req.body.goal_id;
+    res.send('Identifiant de l\'objectif stocké');
+});
+
 module.exports = router;

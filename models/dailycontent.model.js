@@ -1,4 +1,6 @@
 const PostgresClient = require('../PostgresClient');
+const Goal = require('./goal.model');
+const GoalDailyContent = require('./goal_dailycontent.model');
 
 class DailyContent {
 
@@ -22,6 +24,23 @@ class DailyContent {
         const values = [content, order, difficulty_id];
         const res = await PostgresClient.client.query(text, values);
         console.log('Défi journalier enregistré !');
+    }
+
+    /**
+     * @param {Number} goal_id
+     */
+     static async retrieve(goal_id) {
+        const res = await PostgresClient.client.query(
+            `SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content 
+            FROM ${GoalDailyContent.tableName} 
+            INNER JOIN ${Goal.tableName} 
+                on ${GoalDailyContent.tableName}.goal_id = ${Goal.tableName}.id
+            INNER JOIN ${DailyContent.tableName} 
+                on ${GoalDailyContent.tableName}.dailycontent_id = ${DailyContent.tableName}.id
+            WHERE goal_id = $1
+            ORDER BY order_index`
+        ,[goal_id]);
+        return res.rows;
     }
 
     /**
