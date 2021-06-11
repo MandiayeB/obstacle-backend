@@ -28,6 +28,7 @@ class DailyContent {
 
     /**
      * @param {Number} goal_id
+     * @returns {Promise<DailyContent>}
      */
      static async retrieve(goal_id) {
         const res = await PostgresClient.client.query(
@@ -45,6 +46,7 @@ class DailyContent {
 
     /**
      * @param {Number} id
+     * @returns {Promise<DailyContent>}
      */
     static async getByDiffId(id) {
         const res = await PostgresClient.client.query(`SELECT id FROM ${DailyContent.tableName} WHERE difficulty_id = $1`, [id]);

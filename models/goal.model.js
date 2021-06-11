@@ -23,6 +23,7 @@ class Goal {
      * @param {Date} supposed_end_date
      * @param {Number} user_id
      * @param {Number} difficulty_id
+     * @returns {Promise<Goal>}
      */
     static async create(creation_date, supposed_end_date, user_id, difficulty_id) {
         const text = `INSERT INTO ${Goal.tableName}
@@ -42,7 +43,8 @@ class Goal {
         const res = await PostgresClient.client.query(
             `SELECT ${Goal.tableName}.id, ${Difficulty.tableName}.title,
             ${Difficulty.tableName}.image FROM ${Goal.tableName}
-            INNER JOIN ${Difficulty.tableName} ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
+            INNER JOIN ${Difficulty.tableName} 
+            ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
             WHERE user_id = $1`,
         [user_id]);
         return res.rows;
@@ -68,7 +70,9 @@ class Goal {
      */
     static async delete(goal_id) {
         const { title } = await this.getGoals(userId);
-        const res = await PostgresClient.client.query(`DELETE FROM ${Goal.tableName} WHERE id = $1`, [goal_id]);
+        const res = await PostgresClient.client.query(`
+            DELETE FROM ${Goal.tableName} WHERE id = $1`, [goal_id]
+        );
         console.log(`L'objectif ${title} a été supprimé`);
     }
 

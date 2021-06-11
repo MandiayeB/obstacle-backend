@@ -36,6 +36,7 @@ class Difficulty {
 
     /**
      * @param {Number} id
+     * @returns {Promise<Difficulty>}
      */
     static async getById(id) {
         const res = await PostgresClient.client.query(`SELECT id, length FROM ${Difficulty.tableName} WHERE id = $1`, [id]);

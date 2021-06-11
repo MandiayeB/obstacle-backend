@@ -4,12 +4,12 @@ class Achievement {
 
     /**@type {Number} */
     id;
-    /**@type {String} */
-    content;
     /**@type {Date} */
-    ach_date;
+    created_at;
     /**@type {Number} */
     goal_id;
+    /**@type {JSON} */
+    achievement;
 
     /**
      * @param {Number} goal_id
@@ -19,21 +19,20 @@ class Achievement {
         const res = await PostgresClient.client.query(`
             SELECT * FROM ${Achievement.tableName} 
             WHERE goal_id = $1
-            ORDER BY ach_date ASC;`,
+            ORDER BY created_at ASC;`,
         [goal_id]);
         return res.rows;
     }
 
     /**
-     * @param {String} content
-     * @param {Date} ach_date
      * @param {Number} goal_id
+     * @param {JSON} achievement
      */
-    static async create(content, ach_date, goal_id) {
+    static async create(goal_id, achievement) {
 
-        const text = `INSERT INTO ${Achievement.tableName}(content, ach_date, goal_id) 
-            VALUES($1, to_timestamp($2/1000.0), $3)`;
-        const values = [content, ach_date, goal_id];
+        const text = `INSERT INTO ${Achievement.tableName}(goal_id, achievement) 
+            VALUES($1, $2)`;
+        const values = [goal_id, achievement];
         const res = await PostgresClient.client.query(text, values);
         console.log('Accomplissement enregistré !');
     }
@@ -42,9 +41,9 @@ class Achievement {
         return `
             CREATE TABLE ${Achievement.tableName} (
                 id SERIAL PRIMARY KEY,
-                content VARCHAR(255),
-                ach_date TIMESTAMP,
+                created_at TIMESTAMP NOT NULL DEFAULT NOW(),
                 goal_id INTEGER,
+                achievement JSON,
                 CONSTRAINT fk_goal_id
                     FOREIGN KEY(goal_id)
                         REFERENCES goal(id)
