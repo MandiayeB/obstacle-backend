@@ -38,7 +38,7 @@ class DailyContent {
                 on ${GoalDailyContent.tableName}.goal_id = ${Goal.tableName}.id
             INNER JOIN ${DailyContent.tableName} 
                 on ${GoalDailyContent.tableName}.dailycontent_id = ${DailyContent.tableName}.id
-            WHERE goal_id = $1
+            WHERE ${Goal.tableName}.id = $1
             ORDER BY order_index`
         ,[goal_id]);
         return res.rows;

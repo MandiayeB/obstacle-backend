@@ -2,6 +2,7 @@ const PostgresClient = require('../PostgresClient');
 const Theme = require('./theme.model');
 const Activity = require('./activity.model');
 const Difficulty = require('./difficulty.model');
+const Goal = require('./goal.model');
 
 class Challenge {
 
@@ -61,6 +62,26 @@ class Challenge {
         return res.rows[0].theme;
     }
 
+    /**
+     * @param {Number} goal_id
+     * @returns {Promise<Theme>}
+     */
+    static async getByGoalId(goal_id) {
+        const res = await PostgresClient.client.query(
+            `SELECT ${Theme.tableName}.name AS theme
+            FROM ${Goal.tableName}
+            INNER JOIN ${Difficulty.tableName} 
+                ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
+            INNER JOIN ${Challenge.tableName} 
+                ON ${Difficulty.tableName}.challenge_id = ${Challenge.tableName}.id
+            INNER JOIN ${Activity.tableName} 
+                ON ${Challenge.tableName}.activity_id = ${Activity.tableName}.id
+            INNER JOIN ${Theme.tableName} 
+                ON ${Activity.tableName}.theme_id = ${Theme.tableName}.id
+            WHERE ${Goal.tableName}.id = $1`, 
+            [goal_id]);
+        return res.rows[0];
+    }
     static toSQLTable() {
         return `
             CREATE TABLE ${Challenge.tableName} (

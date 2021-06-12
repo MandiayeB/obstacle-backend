@@ -1,9 +1,5 @@
 const PostgresClient = require('../PostgresClient');
-const Activity = require('./activity.model');
-const Challenge = require('./challenge.model');
 const Difficulty = require('./difficulty.model');
-const Theme = require('./theme.model');
-const User = require('./user.model.js');
 
 class Goal {
 

@@ -10,6 +10,7 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
 
 router.post('/', hasToBeAuthenticated, async(req, res) => {
     req.session.goal_id = req.body.goal_id;
+    console.log(req.session.goal_id);
     res.send('Identifiant de l\'objectif stocké');
 });
 
