@@ -8,7 +8,8 @@ const Theme = require('../models/theme.model');
 router.get('/', hasToBeAuthenticated, async(req,res) => {
     const retrieveContent = await DailyContent.retrieve(req.session.goal_id);
     content = retrieveContent.find(content => !content.validated);
-    if (content) res.json(content);
+    const { theme } = Theme.getByGoalId(req.session.goal_id);
+    if (content) res.json(content, theme);
     else res.send('Félicitations, vous avez accompli votre objectif !');
 });
 
