@@ -17,6 +17,8 @@ class User {
     gender;
     /**@type {Date} */
     birthdate;
+    /**@type {String} */
+    picture;
     /**@type {Number} */
     status_id;
 
@@ -43,7 +45,9 @@ class User {
      */
     static async findByEmail(email) {
         const res = await PostgresClient.client.query(`
-            SELECT ${User.tableName}.id AS user_id, firstname, lastname, email, password, gender, birthdate, ${Status.tableName}.role FROM ${User.tableName} 
+            SELECT ${User.tableName}.id AS user_id, firstname, lastname, 
+            email, password, gender, birthdate, picture, ${Status.tableName}.role 
+            FROM ${User.tableName} 
             INNER JOIN ${Status.tableName} ON ${User.tableName}.status_id = ${Status.tableName}.id
             WHERE email = $1`,
         [email]);
@@ -61,7 +65,8 @@ class User {
      */
     static async create(firstname, lastname, email, password, gender, birthdate, status_id) {
 
-        const text = `INSERT INTO ${User.tableName}(firstname, lastname, email, password, gender, birthdate, status_id) 
+        const text = `INSERT INTO ${User.tableName}(firstname, lastname, email, 
+                                password, gender, birthdate, status_id) 
                         VALUES($1, $2, $3, $4, $5, $6, $7)`;
         const values = [firstname, lastname, email, password, gender, birthdate, status_id];
 
@@ -99,6 +104,7 @@ class User {
                 password VARCHAR(255),
                 gender VARCHAR(255),
                 birthdate DATE,
+                picture VARCHAR(255),
                 status_id INTEGER,
                 CONSTRAINT fk_status_id
                     FOREIGN KEY(status_id)

@@ -130,8 +130,6 @@ async function sampleData() {
     await DailyContent.create("Réussissez 7 tirs à trois points d'affilé, en cas d'échec recommencez à zéro.", 28, 3);
     await DailyContent.create("Réussissez 10 tirs à trois points d'affilé, en cas d'échec recommencez à zéro.", 29, 3);
     await DailyContent.create("Réussissez 15 tirs à trois points d'affilé, en cas d'échec recommencez à zéro.", 30, 3);
-    //date = Date.now();
-    //await Achievement.create('J\'ai bien couru aujourd\'hui !', date, 1);
 }
 
 async function run() {
