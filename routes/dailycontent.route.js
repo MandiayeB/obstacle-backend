@@ -4,6 +4,7 @@ const DailyContent = require('../models/dailycontent.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
 const Achievement = require('../models/achievement.model');
 const Challenge = require('../models/challenge.model');
+const GoalDailyContent = require('../models/goal_dailycontent.model');
 
 router.post('/', hasToBeAuthenticated, async(req,res) => {
     const retrieveContent = await DailyContent.retrieve(req.body.goal_id);
@@ -14,13 +15,13 @@ router.post('/', hasToBeAuthenticated, async(req,res) => {
 });
 
 router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
+    const validate = await GoalDailyContent.validate(req.body.gdc_id);
     const acm = {
         "theme": {
             "name": req.body.theme,
             "fields": req.body.fields
         }
     };
-    console.log(req.body.fields);
     const createAchievement = await Achievement.create(req.body.goal_id, acm);
     res.status(200).send('Achievement registered.');
 });

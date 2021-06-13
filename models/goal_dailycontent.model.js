@@ -25,6 +25,18 @@ class GoalDailyContent {
         console.log('Objectif-Jour enregistré !');
     }
 
+    /**
+     * @param {Number} gdc_id
+     */
+     static async validate(gdc_id) {
+        
+        const res = await PostgresClient.client.query(
+            `UPDATE ${GoalDailyContent.tableName} 
+            SET validated = true 
+            WHERE id = $1`, [gdc_id]
+        );
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${GoalDailyContent.tableName} (
