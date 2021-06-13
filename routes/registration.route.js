@@ -3,9 +3,8 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 
 router.post('/', async(req, res) => {
-
     const { firstname,lastname,email,password,confirm,gender,birthdate } = req.body;
-    const hashPassword = await bcrypt.hash(password,10);
+    const hashPassword = await bcrypt.hash(password, 10);
 
     if (firstname && lastname && email && password && confirm && gender && birthdate) {
         console.log(firstname, lastname, email, hashPassword, confirm, gender, birthdate);

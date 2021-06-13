@@ -3,7 +3,6 @@ const router = express.Router();
 const DailyContent = require('../models/dailycontent.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
 const Achievement = require('../models/achievement.model');
-const Theme = require('../models/theme.model');
 const Challenge = require('../models/challenge.model');
 
 router.post('/', hasToBeAuthenticated, async(req,res) => {
@@ -15,15 +14,15 @@ router.post('/', hasToBeAuthenticated, async(req,res) => {
 });
 
 router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
-    const { theme: type } = Theme.getByGoalId(req.session.goal_id);
     const acm = {
         "theme": {
-            "type": type,
+            "name": req.body.theme,
             "fields": req.body.fields
         }
     };
-    const createAchievement = await Achievement.create(req.session.goal_id, acm);
-    res.send('Achievement registered.');
+    console.log(req.body.fields);
+    const createAchievement = await Achievement.create(req.body.goal_id, acm);
+    res.status(200).send('Achievement registered.');
 });
 
 module.exports = router;
