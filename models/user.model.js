@@ -1,5 +1,6 @@
 const PostgresClient = require('../PostgresClient');
 const Status = require('../models/status.model');
+const bcrypt = require('bcrypt');
 
 class User {
 
@@ -87,11 +88,30 @@ class User {
      * @param {Number} userId
      * @param {String} password
      */
-    static async updatePassword(userId, password) {
-        const { firstName } = this.getById(userId);
+    static async updatePassword(emailsession, newPassword) {  
+        
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName} 
-            SET password = $1 WHERE id = $2`, [password, userId]);
-        console.log(`Le mot de passe de ${firstName} a été modifié`);
+            SET password = $1 WHERE email = $2`, [newPassword, emailsession]);
+        
+    }
+
+    static async updateName (emailsession, name) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET firstname = $1 WHERE email = $2`, [name, emailsession]);
+
+    }
+    static async updateLastName (emailsession, lastName) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET lastname = $1 WHERE email = $2`, [lastName, emailsession]);
+
+    }
+    static async updateEmail (emailsession, email) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET email = $1 WHERE email = $2`, [email, emailsession]);
+
     }
 
     static toSQLTable() {
