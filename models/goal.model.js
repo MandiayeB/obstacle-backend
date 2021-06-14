@@ -38,14 +38,28 @@ class Goal {
     static async getGoals(user_id) {
         const res = await PostgresClient.client.query(
             `SELECT ${Goal.tableName}.id, ${Difficulty.tableName}.title,
-            ${Difficulty.tableName}.image FROM ${Goal.tableName}
+            ${Difficulty.tableName}.image 
+            FROM ${Goal.tableName}
             INNER JOIN ${Difficulty.tableName} 
             ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
             WHERE user_id = $1`,
-        [user_id]);
+            [user_id]
+        );
         return res.rows;
     }
 
+    /**
+     * @param {Number} goal_id
+     */
+    static async getDifficultyId(goal_id){
+        const res = await PostgresClient.client.query(
+            `SELECT difficulty_id
+            FROM ${Goal.tableName}
+            WHERE ${Goal.tableName}.id = $1 `, 
+            [goal_id]
+        );
+        return res.rows[0];
+    }
     /**
      * @param {Number} userId
      * @param {Number} difficulty_id
