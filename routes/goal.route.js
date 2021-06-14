@@ -8,7 +8,7 @@ const GoalDailyContent = require('../models/goal_dailycontent.model');
 const DailyContent = require('../models/dailycontent.model');
 
 
-router.get('/', hasToBeAuthenticated, async(req,res) => {
+router.get('/', async(req,res) => {
     const show_options = await Challenge.showOptions();
     res.json(show_options);
 });

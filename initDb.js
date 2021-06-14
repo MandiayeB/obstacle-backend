@@ -44,6 +44,7 @@ async function sampleData() {
     await Theme.create('Sport');
     await Activity.create('Basketball', 1);
     await Challenge.create('Apprendre à tirer', 1, 1);
+    /* Sport */
     await Difficulty.create(
         1, 
         'Le lancer franc',
@@ -68,6 +69,7 @@ async function sampleData() {
         'difficile',
         1
     );
+
     await DailyContent.create('Tirez 30 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 1, 1);
     await DailyContent.create('Tirez 40 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 2, 1);
     await DailyContent.create('Tirez 50 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 3, 1);
@@ -130,8 +132,69 @@ async function sampleData() {
     await DailyContent.create("Réussissez 7 tirs à trois points d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oEdv5e5Zd2gsczAhG/giphy.gif', 28, 3);
     await DailyContent.create("Réussissez 10 tirs à trois points d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oEdv5e5Zd2gsczAhG/giphy.gif', 29, 3);
     await DailyContent.create("Réussissez 15 tirs à trois points d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oEdv5e5Zd2gsczAhG/giphy.gif', 30, 3);
-}
 
+    /* Cuisine */
+    await Theme.create('Cuisine');
+    await Activity.create('Sucré Salé', 2);
+    await Challenge.create('Apprendre à cuisiner', 1, 2);
+    await Difficulty.create(
+        1, 
+        'Les essentiels',
+        'https://media.giphy.com/media/b5Hcaz7EPz26I/giphy.gif',
+        10,
+        'facile',
+        2
+    );
+    await Difficulty.create(
+        2,
+        'Plats complexes',
+        'https://media.giphy.com/media/l0MYN1vN4aWy9vXpK/giphy.gif',
+        10,
+        'moyenne',
+        2
+    );
+    await Difficulty.create(
+        3,
+        'Pâtisserie', 
+        'https://media.giphy.com/media/ARAVYYOfzdFiYghGfa/giphy.gif',
+        10,
+        'difficile',
+        2
+    );
+
+    await DailyContent.create('Cuisinez des pâtes et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 1, 1);
+    await DailyContent.create('Cuisinez du riz et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 2, 1);
+    await DailyContent.create('Cuisinez de la purée de pomme de terre et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 3, 1);
+    await DailyContent.create('Cuisinez des petits pois carotte.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 4, 1);
+    await DailyContent.create('Cuisinez des petits pois carotte.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 5, 1);
+    await DailyContent.create('Cuisinez des petits pois carotte.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 6, 1);
+    await DailyContent.create('Cuisinez des petits pois carotte.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 7, 1);
+    await DailyContent.create("Cuisinez des petits pois carotte.", 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 8, 1);
+    await DailyContent.create("Cuisinez des petits pois carotte.", 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 9, 1);
+    await DailyContent.create("Cuisinez des petits pois carotte.", 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 9, 1);
+
+    await DailyContent.create('Cuisinez des pâtes au pesto.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 1, 2);
+    await DailyContent.create('Cuisinez des pâtes bolognaise.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 2, 2);
+    await DailyContent.create('Cuisinez des pâtes carbonara.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 3, 2);
+    await DailyContent.create('Cuisinez des lasagnes au boeuf.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 4, 2);
+    await DailyContent.create('Cuisinez des lasagnes végétarienne.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 5, 2);
+    await DailyContent.create('Cuisinez des lasagnes végétarienne.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 6, 2);
+    await DailyContent.create('Cuisinez des lasagnes végétarienne.', 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 7, 2);
+    await DailyContent.create("Cuisinez des lasagnes végétarienne.", 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 8, 2);
+    await DailyContent.create("Cuisinez des lasagnes végétarienne.", 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 9, 2);
+    await DailyContent.create("Cuisinez des lasagnes végétarienne.", 'https://media.giphy.com/media/P7FIpAKDpz9IKKvT1s/giphy.gif', 9, 2);
+
+    await DailyContent.create('Cuisinez un gâteau au yaourt.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 1, 3);
+    await DailyContent.create('Cuisinez un gâteau au yaourt aux pommes.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 2, 3);
+    await DailyContent.create('Cuisinez une mousse au chocolat.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 3, 3);
+    await DailyContent.create('Cuisinez une salade de fruit.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 4, 3);
+    await DailyContent.create('Cuisinez un gateau au chocolat.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 5, 3);
+    await DailyContent.create('Cuisinez un tiramisu.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 6, 3);
+    await DailyContent.create('Cuisinez un tiramisu.', 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 7, 3);
+    await DailyContent.create("Cuisinez un tiramisu.", 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 8, 3);
+    await DailyContent.create("Cuisinez un tiramisu.", 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 9, 3);
+    await DailyContent.create("Cuisinez un tiramisu.", 'https://media.giphy.com/media/3oEjI9dX74ezjCHS7e/giphy.gif', 9, 3);
+}
 async function run() {
     await PostgresClient.init();
     console.log("Connected");
