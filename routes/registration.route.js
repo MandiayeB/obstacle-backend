@@ -13,7 +13,7 @@ router.post('/', async(req, res) => {
 
         } else {
             if (password === confirm) {
-                const createUser = await User.create(firstname, lastname, email, hashPassword, gender, birthdate, 1);
+                await User.create(firstname, lastname, email, hashPassword, gender, birthdate, 1);
                 const credentials = await User.findByEmail(email);
                 req.session.authenticated = true;
                 delete credentials.password;

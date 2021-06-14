@@ -15,14 +15,14 @@ router.post('/', hasToBeAuthenticated, async(req,res) => {
 });
 
 router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
-    const validate = await GoalDailyContent.validate(req.body.gdc_id);
+    await GoalDailyContent.validate(req.body.gdc_id);
     const acm = {
         "theme": {
             "name": req.body.theme,
             "fields": req.body.fields
         }
     };
-    const createAchievement = await Achievement.create(req.body.goal_id, acm);
+    await Achievement.create(req.body.goal_id, acm);
     res.status(200).send('Achievement registered.');
 });
 
