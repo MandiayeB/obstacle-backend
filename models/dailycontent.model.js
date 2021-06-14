@@ -8,6 +8,8 @@ class DailyContent {
     id;
     /**@type {String} */
     content;
+    /**@type {String} */
+    image;
     /**@type {Number} */
     order;
     /**@type {Number} */
@@ -15,13 +17,14 @@ class DailyContent {
 
     /**
      * @param {String} content
+     * @param {String} image
      * @param {Number} order
      * @param {Number} difficulty_id
      */
-     static async create(content, order, difficulty_id) {
-        const text = `INSERT INTO ${DailyContent.tableName}(content, order_index, difficulty_id) 
-            VALUES($1, $2, $3)`;
-        const values = [content, order, difficulty_id];
+     static async create(content, image, order, difficulty_id) {
+        const text = `INSERT INTO ${DailyContent.tableName}(content, image, order_index, difficulty_id) 
+            VALUES($1, $2, $3, $4)`;
+        const values = [content, image, order, difficulty_id];
         const res = await PostgresClient.client.query(text, values);
         console.log('Défi journalier enregistré !');
     }
@@ -32,7 +35,7 @@ class DailyContent {
      */
      static async retrieve(goal_id) {
         const res = await PostgresClient.client.query(
-            `SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content 
+            `SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image 
             FROM ${GoalDailyContent.tableName} 
             INNER JOIN ${Goal.tableName} 
                 on ${GoalDailyContent.tableName}.goal_id = ${Goal.tableName}.id
@@ -58,6 +61,7 @@ class DailyContent {
             CREATE TABLE ${DailyContent.tableName} (
                 id SERIAL PRIMARY KEY,
                 content TEXT,
+                image VARCHAR(255),
                 order_index INTEGER,
                 difficulty_id INTEGER,
                 CONSTRAINT fk_difficulty_id
