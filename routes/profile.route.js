@@ -8,11 +8,11 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
     res.json(req.session.credentials);
 });
 
-router.put('/', async(req,res) => {
+router.put('/editCredentials', async(req,res) => {
 
-    const { firstname, lastname, email, emailsession } = req.body;
-    const { oldPassword, newPassword, confirmPassword} = req.body;
-    if(firstname || lastname || email !== "" && oldPassword && newPassword && confirmPassword === undefined ) {
+    const { firstname, lastname, email, emailsession} = req.body;
+
+    if(firstname || lastname || email !== undefined) {
         if(firstname !== "") {
             const put_name = await User.updateName(emailsession, firstname);
         }   
@@ -23,11 +23,15 @@ router.put('/', async(req,res) => {
             const put_email = await User.updateEmail(emailsession, email);
         }
         res.status(308).json({ msg: 'Redirection vers Profile' });
-        console.log("Firstname la");
 
     }   
 
-    if(oldPassword && newPassword && confirmPassword !== "" && firstname || lastname || email === undefined) {
+});
+router.put('/editPassword', async(req,res) => {
+
+    const { oldPassword, newPassword, confirmPassword, emailsession} = req.body;
+
+    if(oldPassword && newPassword && confirmPassword !== undefined) {
         const credentials = await User.findByEmail(emailsession);
         if(credentials){    
             const isMatch = await bcrypt.compare(oldPassword, credentials.password);

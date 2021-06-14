@@ -85,8 +85,8 @@ class User {
     }
 
     /**
-     * @param {Number} userId
-     * @param {String} password
+     * @param {String} emailsession
+     * @param {String} newPassword
      */
     static async updatePassword(emailsession, newPassword) {  
         
@@ -95,18 +95,32 @@ class User {
         
     }
 
+      /**
+     * @param {String} emailsession
+     * @param {String} name
+     */
     static async updateName (emailsession, name) {
 
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
             SET firstname = $1 WHERE email = $2`, [name, emailsession]);
 
     }
+
+    /**
+     * @param {String} emailsession
+     * @param {String} lastname
+     */
     static async updateLastName (emailsession, lastName) {
 
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
             SET lastname = $1 WHERE email = $2`, [lastName, emailsession]);
 
     }
+
+    /**
+     * @param {String} emailsession
+     * @param {String} email
+     */
     static async updateEmail (emailsession, email) {
 
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
