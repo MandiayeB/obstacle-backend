@@ -47,7 +47,7 @@ class Goal {
     }
 
     /**
-     * @param {Number} userId
+     * @param {Number} user_id
      * @param {Number} difficulty_id
      * @returns {Promise<Goal>}
      */
@@ -59,6 +59,18 @@ class Goal {
             [user_id, difficulty_id]
         );
         return res.rows[0];
+    }
+
+    /**
+     * @param {Number} user_id
+     * @returns {Promise<Goal>}
+     */
+    static async getByUserId(user_id) {
+        const res = await PostgresClient.client.query(
+            `SELECT id FROM ${Goal.tableName} WHERE user_id = $1`, 
+            [user_id]
+        );
+        return res.rows;
     }
 
     /**
