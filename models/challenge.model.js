@@ -48,9 +48,9 @@ class Challenge {
                                 'image', ${Difficulty.tableName}.image, 
                                 'length', ${Difficulty.tableName}.length,
                                 'difficulty', ${Difficulty.tableName}.difficulty
-                            )) FROM ${Difficulty.tableName})
-                        )) FROM ${Challenge.tableName})
-                    )) FROM ${Activity.tableName})
+                            )) FROM ${Difficulty.tableName} WHERE challenge_id = ${Challenge.tableName}.id)
+                        )) FROM ${Challenge.tableName} WHERE activity_id = ${Activity.tableName}.id)
+                    )) FROM ${Activity.tableName} WHERE theme_id = ${Theme.tableName}.id)
                 )) AS theme FROM ${Theme.tableName})
 
             FROM ${Challenge.tableName}

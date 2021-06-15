@@ -1,5 +1,6 @@
 const PostgresClient = require('../PostgresClient');
 const Status = require('../models/status.model');
+const bcrypt = require('bcrypt');
 
 class User {
 
@@ -84,14 +85,59 @@ class User {
     }
 
     /**
-     * @param {Number} userId
-     * @param {String} password
+     * @param {String} emailsession
+     * @param {String} newPassword
      */
-    static async updatePassword(userId, password) {
-        const { firstName } = this.getById(userId);
+    static async updatePassword(emailsession, newPassword) {  
+        
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName} 
-            SET password = $1 WHERE id = $2`, [password, userId]);
-        console.log(`Le mot de passe de ${firstName} a été modifié`);
+            SET password = $1 WHERE email = $2`, [newPassword, emailsession]);
+        
+    }
+
+      /**
+     * @param {String} emailsession
+     * @param {String} name
+     */
+    static async updateName (emailsession, name) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET firstname = $1 WHERE email = $2`, [name, emailsession]);
+
+    }
+
+    /**
+     * @param {String} emailsession
+     * @param {String} lastname
+     */
+    static async updateLastName (emailsession, lastName) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET lastname = $1 WHERE email = $2`, [lastName, emailsession]);
+
+    }
+
+    /**
+     * @param {String} emailsession
+     * @param {String} email
+     */
+    static async updateEmail (emailsession, email) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET email = $1 WHERE email = $2`, [email, emailsession]);
+
+    }
+
+
+    /**
+     * @param {String} emailsession
+     * @param {String} picture
+     */
+     static async updatePicture (emailsession, picture) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET picture = $1 WHERE email = $2`, [picture, emailsession]);
+
     }
 
     static toSQLTable() {
