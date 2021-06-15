@@ -128,6 +128,18 @@ class User {
 
     }
 
+
+    /**
+     * @param {String} emailsession
+     * @param {String} picture
+     */
+     static async updatePicture (emailsession, picture) {
+
+        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
+            SET picture = $1 WHERE email = $2`, [picture, emailsession]);
+
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${User.tableName} (

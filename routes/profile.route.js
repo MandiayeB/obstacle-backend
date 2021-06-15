@@ -10,21 +10,22 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
 
 router.put('/editCredentials', async(req,res) => {
 
-    const { firstname, lastname, email, emailsession} = req.body;
-
-    if(firstname || lastname || email !== undefined) {
-        if(firstname !== "") {
+    const { firstname, lastname, email, emailsession, picture} = req.body;
+        console.log(picture);
+    
+        if(firstname) {
             const put_name = await User.updateName(emailsession, firstname);
         }   
-        if(lastname !== "") {
+        if(lastname) {
             const put_lastName = await User.updateLastName(emailsession, lastname);
         }  
-        if(email!==""){
+        if(email){
             const put_email = await User.updateEmail(emailsession, email);
         }
+        if(picture){
+            const put_picture = await User.updatePicture(emailsession, picture);
+        }
         res.status(308).json({ msg: 'Redirection vers Profile' });
-
-    }   
 
 });
 router.put('/editPassword', async(req,res) => {
