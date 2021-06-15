@@ -1,4 +1,6 @@
 const PostgresClient = require('../PostgresClient');
+const Difficulty = require('./difficulty.model');
+const Goal = require('./goal.model');
 
 class Achievement {
 
@@ -17,7 +19,11 @@ class Achievement {
      */
     static async getByGoalId(goal_id) {
         const res = await PostgresClient.client.query(`
-            SELECT * FROM ${Achievement.tableName} 
+            SELECT achievement, created_at, title FROM ${Achievement.tableName} 
+            INNER JOIN ${Goal.tableName} 
+            ON ${Achievement.tableName}.goal_id = ${Goal.tableName}.id
+            INNER JOIN ${Difficulty.tableName} 
+            ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
             WHERE goal_id = $1
             ORDER BY created_at ASC;`,
         [goal_id]);
