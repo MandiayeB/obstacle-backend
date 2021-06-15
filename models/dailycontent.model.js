@@ -35,7 +35,7 @@ class DailyContent {
      */
      static async retrieve(goal_id) {
         const res = await PostgresClient.client.query(
-            `SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image 
+            `SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image, order_index 
             FROM ${GoalDailyContent.tableName} 
             INNER JOIN ${Goal.tableName} 
                 on ${GoalDailyContent.tableName}.goal_id = ${Goal.tableName}.id
@@ -54,6 +54,19 @@ class DailyContent {
     static async getByDiffId(id) {
         const res = await PostgresClient.client.query(`SELECT id FROM ${DailyContent.tableName} WHERE difficulty_id = $1`, [id]);
         return res.rows;
+    }
+
+    /**
+     * @param {Number} difficulty_id
+     */
+    static async countDailyContent(difficulty_id){
+        const res = await PostgresClient.client.query(`
+            SELECT COUNT(*)
+            FROM ${DailyContent.tableName}
+            WHERE difficulty_id = $1`,
+            [difficulty_id]
+        );
+        return res.rows[0];
     }
 
     static toSQLTable() {
