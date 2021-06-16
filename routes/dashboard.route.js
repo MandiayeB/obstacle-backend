@@ -8,7 +8,8 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
     const goals = await Goal.getByUserId(req.session.credentials.user_id);
     const acmStats = [];
     for (const goal of goals) {
-        acmStats.push(await Achievement.getByGoalId(goal.id));
+        acm = await Achievement.getByGoalId(goal.id);
+        if (acm.length > 0) acmStats.push(acm);
     }
     res.json(acmStats);
 });
