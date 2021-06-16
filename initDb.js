@@ -163,7 +163,7 @@ async function sampleData() {
     );
 
     await DailyContent.create('Cuisinez des pâtes et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 1, 4);
-    await DailyContent.create('Cuisinez du riz et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 2, 1);
+    await DailyContent.create('Cuisinez du riz et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 2, 4);
     await DailyContent.create('Cuisinez de la purée de pomme de terre et des oeufs.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 3, 4);
     await DailyContent.create('Cuisinez des petits pois carotte.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 4, 4);
     await DailyContent.create('Cuisinez des petits pois carotte.', 'https://media.giphy.com/media/CNocEFcF9IBegtgW3q/giphy.gif', 5, 4);

@@ -11,19 +11,18 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
 router.put('/editCredentials', async(req,res) => {
 
     const { firstname, lastname, email, emailsession, picture} = req.body;
-        console.log(picture);
     
-        if(firstname) {
-            const put_name = await User.updateName(emailsession, firstname);
+        if (firstname) {
+            await User.updateName(emailsession, firstname);
         }   
-        if(lastname) {
-            const put_lastName = await User.updateLastName(emailsession, lastname);
+        if (lastname) {
+            await User.updateLastName(emailsession, lastname);
         }  
-        if(email){
-            const put_email = await User.updateEmail(emailsession, email);
+        if (email) {
+            await User.updateEmail(emailsession, email);
         }
-        if(picture){
-            const put_picture = await User.updatePicture(emailsession, picture);
+        if (picture) {
+            await User.updatePicture(emailsession, picture);
         }
         res.status(308).json({ msg: 'Redirection vers Profile' });
 
@@ -39,7 +38,7 @@ router.put('/editPassword', async(req,res) => {
             if(isMatch){
                 if(newPassword === confirmPassword){
                     const hashPassword = await bcrypt.hash(newPassword,10);
-                    const update_password = await User.updatePassword(emailsession, hashPassword);
+                    await User.updatePassword(emailsession, hashPassword);
                     res.status(308).json({ msg: 'Redirection vers Profile' });
                 } else {
                     res.status(403).json({ msg: 'Les deux mot de passe ne sont pas identique' });
