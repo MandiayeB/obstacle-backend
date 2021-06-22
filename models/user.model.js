@@ -133,13 +133,18 @@ class User {
      * @param {String} emailsession
      * @param {String} picture
      */
-     static async updatePicture (emailsession, picture) {
+     static async uploadPicture (emailsession, picture) {
 
+        const pictureObject = JSON.parse(picture);
+        const storedPicture = new Picture({
+            ...pictureObject,
+            pictureUrl: `${req.protocol}://${req.get('host')}/pictures/${req.file.filename}` 
+        });
+        console.log(storedPicture.pictureUrl);
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
-            SET picture = $1 WHERE email = $2`, [picture, emailsession]);
+            SET picture = $1 WHERE email = $2`, [storedPicture.pictureUrl, emailsession]);
 
     }
-
     static toSQLTable() {
         return `
             CREATE TABLE ${User.tableName} (
