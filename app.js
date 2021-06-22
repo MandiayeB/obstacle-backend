@@ -10,6 +10,7 @@ const registrationRouter = require('./routes/registration.route');
 const dailycontentRouter = require('./routes/dailycontent.route');
 const disconnectionRouter = require('./routes/disconnection.route');
 const dashboardRouter = require('./routes/dashboard.route');
+const addchallenge = require ('./routes/challenge.route');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,6 +34,7 @@ app.use('/signin', registrationRouter);
 app.use('/dailycontent', dailycontentRouter);
 app.use('/disconnection', disconnectionRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/addChallenge', addchallenge);
 
 app.listen(port, () => {
     console.log('Express server is up!');
