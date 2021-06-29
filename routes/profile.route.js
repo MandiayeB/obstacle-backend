@@ -10,24 +10,6 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
     res.json(req.session.credentials);
 });
 
-router.post('/', async(req, res) =>{
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-          // A Multer error occurred when uploading.
-          res.send(err);
-        } else if (err) {
-          // An unknown error occurred when uploading.
-          res.send(err);
-        }
-        const picture = req.file.filename;
-        console.log(picture);
-    })
-    // const { picture } = req.body;
-    
-    // const uploadPicture = await User.uploadPicture(emailsession, picture);
-    // res.status(201).json({ msg: 'L\image à été stockée' });
-});
-
 router.put('/editCredentials', async(req,res) => {
 
     const { firstname, lastname, email, emailsession} = req.body;
@@ -44,6 +26,7 @@ router.put('/editCredentials', async(req,res) => {
         res.status(308).json({ msg: 'Redirection vers Profile' });
 
 });
+
 router.put('/editPassword', async(req,res) => {
 
     const { oldPassword, newPassword, confirmPassword, emailsession} = req.body;

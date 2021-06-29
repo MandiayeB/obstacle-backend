@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
-const bodyParser = require('body-parser');
 const PostgresClient = require('./PostgresClient');
 const homeRouter = require('./routes/home.route');
 const profileRouter = require('./routes/profile.route');
@@ -12,6 +11,7 @@ const registrationRouter = require('./routes/registration.route');
 const dailycontentRouter = require('./routes/dailycontent.route');
 const disconnectionRouter = require('./routes/disconnection.route');
 const dashboardRouter = require('./routes/dashboard.route');
+const uploadRouter = require('./routes/upload.route');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,7 +19,6 @@ const port = process.env.PORT || 3000;
 PostgresClient.init().then(() => console.log("Connected to Postgres Db!"));
 
 app.use(express.json());
-app.use(bodyParser.json());
 
 app.use(cors({ origin: [`http://localhost:${port}`, `http://localhost:8080`], credentials: true }));
 app.use(session({
@@ -36,6 +35,7 @@ app.use('/signin', registrationRouter);
 app.use('/dailycontent', dailycontentRouter);
 app.use('/disconnection', disconnectionRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/upload', uploadRouter);
 app.use('/pictures', express.static(path.join(__dirname, 'pictures')));
 
 app.listen(port, () => {

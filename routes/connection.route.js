@@ -10,8 +10,10 @@ router.post('/', async(req, res) => {
             const isMatch = await bcrypt.compare(password, credentials.password);
             if (isMatch) {
                 req.session.authenticated = true;
+                req.session.email = email;
                 delete credentials.password;
                 req.session.credentials = credentials;
+                req.session.credentials.picture = `http://localhost:3000/pictures/${req.session.credentials.picture}`;
                 res.status(308).send(req.session.credentials);
             } else {
                 res.status(403).json({ msg: 'Les informations ne correspondent pas.' });
