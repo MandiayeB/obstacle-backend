@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
+const path = require('path');
 const PostgresClient = require('./PostgresClient');
 const homeRouter = require('./routes/home.route');
 const profileRouter = require('./routes/profile.route');
@@ -10,6 +11,7 @@ const registrationRouter = require('./routes/registration.route');
 const dailycontentRouter = require('./routes/dailycontent.route');
 const disconnectionRouter = require('./routes/disconnection.route');
 const dashboardRouter = require('./routes/dashboard.route');
+const uploadRouter = require('./routes/upload.route');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,6 +35,8 @@ app.use('/signin', registrationRouter);
 app.use('/dailycontent', dailycontentRouter);
 app.use('/disconnection', disconnectionRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/upload', uploadRouter);
+app.use('/pictures', express.static(path.join(__dirname, 'pictures')));
 
 app.listen(port, () => {
     console.log('Express server is up!');

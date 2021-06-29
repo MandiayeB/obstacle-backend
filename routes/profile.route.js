@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
+const { upload, storage, multer } = require('../middlewares/multer-config');
 const bcrypt = require('bcrypt');
+
 
 router.get('/', hasToBeAuthenticated, async(req,res) => {
     res.json(req.session.credentials);
@@ -10,7 +12,7 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
 
 router.put('/editCredentials', async(req,res) => {
 
-    const { firstname, lastname, email, emailsession, picture} = req.body;
+    const { firstname, lastname, email, emailsession} = req.body;
     
         if (firstname) {
             await User.updateName(emailsession, firstname);
@@ -21,12 +23,10 @@ router.put('/editCredentials', async(req,res) => {
         if (email) {
             await User.updateEmail(emailsession, email);
         }
-        if (picture) {
-            await User.updatePicture(emailsession, picture);
-        }
         res.status(308).json({ msg: 'Redirection vers Profile' });
 
 });
+
 router.put('/editPassword', async(req,res) => {
 
     const { oldPassword, newPassword, confirmPassword, emailsession} = req.body;

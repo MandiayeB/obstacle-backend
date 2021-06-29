@@ -64,12 +64,12 @@ class User {
      * @param {Date} birthdate
      * @param {Number} status_id
      */
-    static async create(firstname, lastname, email, password, gender, birthdate, status_id) {
+    static async create(firstname, lastname, email, password, gender, birthdate, picture, status_id) {
 
         const text = `INSERT INTO ${User.tableName}(firstname, lastname, email, 
-                                password, gender, birthdate, status_id) 
-                        VALUES($1, $2, $3, $4, $5, $6, $7)`;
-        const values = [firstname, lastname, email, password, gender, birthdate, status_id];
+                                password, gender, birthdate, picture, status_id) 
+                        VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
+        const values = [firstname, lastname, email, password, gender, birthdate, picture, status_id];
 
         const res = await PostgresClient.client.query(text, values);
         console.log('Utilisateur enregistré !');
@@ -133,11 +133,20 @@ class User {
      * @param {String} emailsession
      * @param {String} picture
      */
-     static async updatePicture (emailsession, picture) {
+     static async uploadPicture (emailsession, picture) {
 
         const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
-            SET picture = $1 WHERE email = $2`, [picture, emailsession]);
+            SET picture = $1 WHERE email = $2`, [ picture, emailsession]);
 
+    }
+
+    /**
+     * @param {String} emailsession
+     */
+    static async getPicture (emailsession) {
+
+        const res = await PostgresClient.client.query(`SELECT picture FROM ${User.tableName} WHERE email = $1`, [emailsession]);
+        return res.rows[0];
     }
 
     static toSQLTable() {
