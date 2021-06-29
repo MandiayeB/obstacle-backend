@@ -105,8 +105,8 @@ class Goal {
                 id SERIAL PRIMARY KEY,
                 creation_date TIMESTAMP,
                 supposed_end_date TIMESTAMP,
-                user_id INTEGER,
-                difficulty_id INTEGER,
+                user_id INTEGER ON DELETE CASCADE,
+                difficulty_id INTEGER ON DELETE CASCADE,
                 CONSTRAINT fk_user_id
                     FOREIGN KEY(user_id)
                         REFERENCES users(id),

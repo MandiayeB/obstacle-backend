@@ -76,7 +76,7 @@ class DailyContent {
                 content TEXT,
                 image VARCHAR(255),
                 order_index INTEGER,
-                difficulty_id INTEGER,
+                difficulty_id INTEGER ON DELETE CASCADE,
                 CONSTRAINT fk_difficulty_id
                     FOREIGN KEY(difficulty_id)
                         REFERENCES difficulty(id)

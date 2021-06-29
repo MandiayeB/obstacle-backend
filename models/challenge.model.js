@@ -87,8 +87,8 @@ class Challenge {
             CREATE TABLE ${Challenge.tableName} (
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(255),
-                author INTEGER,
-                activity_id INTEGER,
+                author INTEGER ON DELETE CASCADE,
+                activity_id INTEGER ON DELETE CASCADE,
                 CONSTRAINT fk_author
                     FOREIGN KEY(author)
                         REFERENCES users(id),

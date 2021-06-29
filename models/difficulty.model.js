@@ -52,7 +52,7 @@ class Difficulty {
                 image VARCHAR(255),
                 length INTEGER,
                 difficulty VARCHAR(255),
-                challenge_id INTEGER,
+                challenge_id INTEGER ON DELETE CASCADE,
                 CONSTRAINT fk_challenge_id
                     FOREIGN KEY(challenge_id)
                         REFERENCES challenge(id)
