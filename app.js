@@ -20,7 +20,7 @@ PostgresClient.init().then(() => console.log("Connected to Postgres Db!"));
 
 app.use(express.json());
 
-app.use(cors({ origin: [`http://localhost:${port}`, `http://localhost:8080`], credentials: true }));
+app.use(cors({ origin: [`http://localhost:${port}`, `https://obstacle.herokuapp.com/`], credentials: true }));
 app.use(session({
     secret: 'my secret',
     resave: false,
