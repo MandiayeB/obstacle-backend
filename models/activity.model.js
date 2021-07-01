@@ -21,6 +21,14 @@ class Activity {
         console.log('Activité enregistrée !');
     }
 
+    static async getByName (name) {
+        const text = `SELECT id FROM ${Activity.tableName} WHERE name = $1`;
+        const value = [name[0]];
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows[0];
+
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${Activity.tableName} (

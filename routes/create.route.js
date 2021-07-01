@@ -2,6 +2,9 @@ const express = require('express');
 const Theme = require('../models/challenge.model');
 const DailyContent = require('../models/dailycontent.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
+const Activity = require('../models/activity.model');
+const Challenge = require('../models/challenge.model');
+const Difficulty = require ('../models/difficulty.model')
 const router = express.Router();
 
 router.get('/', hasToBeAuthenticated, async(req, res) => {
@@ -11,16 +14,16 @@ router.get('/', hasToBeAuthenticated, async(req, res) => {
 
 router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
     const { difficulty_id } = req.body;
-    console.log(req.body);
-    const dailycontent = await DailyContent.getByDiffId(difficulty_id); //A CHANGER
+    const dailycontent = await DailyContent.getAllFormId(difficulty_id);
     res.json(dailycontent)
-})
+});
 
-router.post('/',  hasToBeAuthenticated, async(req, res) => {
-    const { theme, typeDifficulty, gif, duree, titleDifficulty, titleChallenge, activiter } = req.body;
-
-    console.log(theme+typeDifficulty+gif+duree+titleChallenge+titleDifficulty+activiter);
- 
+router.post('/newchallenge', hasToBeAuthenticated, async(req,res) => {
+    const { typeDifficulty, gif, duree, titleDifficulty, titleChallenge, activity, author_id } = req.body;
+    const { id: activity_id } = await Activity.getByName(activity);
+    await Challenge.create(titleChallenge, author_id, activity_id);
+    const challenge_id = await Challenge.getByChallengeTitle(titleChallenge);
+    await Difficulty.create(1, titleDifficulty, gif, duree, typeDifficulty, challenge_id[0].id);
 });
 
 module.exports = router;

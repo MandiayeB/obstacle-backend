@@ -29,6 +29,14 @@ class Challenge {
         console.log('Challenge enregistré !');
     }
 
+    static async getByChallengeTitle(challenge_title) {
+        const text =`SELECT id FROM ${Challenge.tableName} WHERE name = $1`
+        const value = [challenge_title]
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows;
+    
+    }
+
     /**
      * @returns {Promise<JSON>}
      */

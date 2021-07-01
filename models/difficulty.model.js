@@ -43,6 +43,11 @@ class Difficulty {
         return res.rows[0];
     }
 
+    static async getByChallengeId(challenge_id) {
+        const res = await PostgresClient.client.query(`SELECT level FROM ${Difficulty.tableName} WHERE challenge_id = $1`, [challenge_id]);  
+        return res.rows[0];  
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${Difficulty.tableName} (

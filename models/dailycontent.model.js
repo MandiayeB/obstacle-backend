@@ -57,6 +57,15 @@ class DailyContent {
     }
 
     /**
+     * @param {Number} id
+     * @returns {Promise<DailyContent>}
+     */
+    static async getAllFormId(id) {
+        const res = await PostgresClient.client.query(`SELECT * FROM ${DailyContent.tableName} WHERE difficulty_id = $1`, [id]);
+        return res.rows;
+    }
+
+    /**
      * @param {Number} difficulty_id
      */
     static async countDailyContent(difficulty_id){
