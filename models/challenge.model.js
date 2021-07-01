@@ -29,6 +29,9 @@ class Challenge {
         console.log('Challenge enregistré !');
     }
 
+    /**
+     * @param {String} challenge_title
+     */
     static async getByChallengeTitle(challenge_title) {
         const text =`SELECT id FROM ${Challenge.tableName} WHERE name = $1`
         const value = [challenge_title]

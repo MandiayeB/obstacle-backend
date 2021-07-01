@@ -21,6 +21,11 @@ class Activity {
         console.log('Activité enregistrée !');
     }
 
+    
+    /**
+     * @param {String} name
+     */
+
     static async getByName (name) {
         const text = `SELECT id FROM ${Activity.tableName} WHERE name = $1`;
         const value = [name[0]];

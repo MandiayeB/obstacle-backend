@@ -13,9 +13,10 @@ router.get('/', hasToBeAuthenticated, async(req, res) => {
 });
 
 router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
-    const { difficulty_id } = req.body;
-    const dailycontent = await DailyContent.getAllFormId(difficulty_id);
-    res.json(dailycontent)
+    const { content, gif, difficulty_id} = req.body;
+    const index = await DailyContent.getAllFormId(difficulty_id);
+    const order_max = index.length+1;
+    await DailyContent.create(content, gif, order_max, difficulty_id)
 });
 
 router.post('/newchallenge', hasToBeAuthenticated, async(req,res) => {

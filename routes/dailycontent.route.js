@@ -29,4 +29,10 @@ router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
     res.status(200).send('Achievement registered.');
 });
 
+router.post('/daily', hasToBeAuthenticated, async(req,res) => {
+    const { difficulty_id } = req.body;
+    const dailycontent = await DailyContent.getAllFormId(difficulty_id);
+    res.json(dailycontent);
+})
+
 module.exports = router;
