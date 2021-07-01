@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 const PostgresClient = require('./PostgresClient');
 const homeRouter = require('./routes/home.route');
 const profileRouter = require('./routes/profile.route');
@@ -20,7 +21,11 @@ PostgresClient.init().then(() => console.log("Connected to Postgres Db!"));
 
 app.use(express.json());
 
-app.use(cors({ origin: [`http://localhost:${port}`, `https://obstacle.herokuapp.com/`], credentials: true }));
+app.use(cors({ 
+    origin: [`http://localhost:${port}`, process.env.PG_CUSTOM_ORIGIN || `https://obstacle.herokuapp.com/`], 
+    credentials: true 
+}));
+
 app.use(session({
     secret: 'my secret',
     resave: false,

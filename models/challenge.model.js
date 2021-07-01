@@ -87,14 +87,14 @@ class Challenge {
             CREATE TABLE ${Challenge.tableName} (
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(255),
-                author INTEGER ON DELETE CASCADE,
-                activity_id INTEGER ON DELETE CASCADE,
+                author INTEGER,
+                activity_id INTEGER NOT NULL,
                 CONSTRAINT fk_author
                     FOREIGN KEY(author)
-                        REFERENCES users(id),
+                        REFERENCES users(id) ON DELETE CASCADE,
                 CONSTRAINT fk_activity_id
                     FOREIGN KEY(activity_id)
-                        REFERENCES activity(id)
+                        REFERENCES activity(id) ON DELETE CASCADE
             );
         `;
     }

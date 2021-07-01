@@ -48,11 +48,11 @@ class Achievement {
             CREATE TABLE ${Achievement.tableName} (
                 id SERIAL PRIMARY KEY,
                 created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-                goal_id INTEGER ON DELETE CASCADE,
+                goal_id INTEGER NOT NULL,
                 achievement JSON,
                 CONSTRAINT fk_goal_id
                     FOREIGN KEY(goal_id)
-                        REFERENCES goal(id)
+                        REFERENCES goal(id) ON DELETE CASCADE
             );
         `;
     }

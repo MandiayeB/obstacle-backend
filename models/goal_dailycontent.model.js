@@ -42,14 +42,14 @@ class GoalDailyContent {
             CREATE TABLE ${GoalDailyContent.tableName} (
                 id SERIAL PRIMARY KEY,
                 validated BOOLEAN,
-                goal_id INTEGER ON DELETE CASCADE,
-                dailycontent_id INTEGER ON DELETE CASCADE,
+                goal_id INTEGER NOT NULL,
+                dailycontent_id INTEGER NOT NULL,
                 CONSTRAINT fk_goal_id
                     FOREIGN KEY(goal_id)
-                        REFERENCES goal(id),
+                        REFERENCES goal(id) ON DELETE CASCADE,
                 CONSTRAINT fk_dailycontent_id
                     FOREIGN KEY(dailycontent_id)
-                        REFERENCES dailycontent(id)
+                        REFERENCES dailycontent(id) ON DELETE CASCADE
             );
         `;
     }

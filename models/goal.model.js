@@ -105,14 +105,14 @@ class Goal {
                 id SERIAL PRIMARY KEY,
                 creation_date TIMESTAMP,
                 supposed_end_date TIMESTAMP,
-                user_id INTEGER ON DELETE CASCADE,
-                difficulty_id INTEGER ON DELETE CASCADE,
+                user_id INTEGER NOT NULL,
+                difficulty_id INTEGER NOT NULL,
                 CONSTRAINT fk_user_id
                     FOREIGN KEY(user_id)
-                        REFERENCES users(id),
+                        REFERENCES users(id) ON DELETE CASCADE,
                 CONSTRAINT fk_difficulty_id
                     FOREIGN KEY(difficulty_id)
-                        REFERENCES difficulty(id)
+                        REFERENCES difficulty(id) ON DELETE CASCADE
             );
         `;
     }
