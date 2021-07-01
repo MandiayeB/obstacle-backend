@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
-const { upload, storage, multer } = require('../middlewares/multer-config');
 const bcrypt = require('bcrypt');
 
 
