@@ -21,14 +21,8 @@ PostgresClient.init().then(() => console.log("Connected to Postgres Db!"));
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", process.env.PG_CUSTOM_ORIGIN || `https://obstacle.herokuapp.com/`);
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
 app.use(cors({ 
-    origin: [`http://localhost:${port}`, process.env.PG_CUSTOM_ORIGIN || `https://obstacle.herokuapp.com/`], 
+    origin: [`http://localhost:${port}`, process.env.PG_CUSTOM_ORIGIN || `https://obstacle.herokuapp.com`], 
     credentials: true 
 }));
 
