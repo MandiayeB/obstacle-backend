@@ -1,14 +1,14 @@
-const PostgresClient = require('./PostgresClient');
-const Status = require('./models/status.model');
-const User = require('./models/user.model');
-const Theme = require('./models/theme.model');
-const Activity = require('./models/activity.model');
-const Challenge = require('./models/challenge.model');
-const Difficulty = require('./models/difficulty.model');
-const Goal = require('./models/goal.model');
-const DailyContent = require('./models/dailycontent.model');
-const GoalDailyContent = require('./models/goal_dailycontent.model');
-const Achievement = require('./models/achievement.model');
+const PostgresClient = require('../PostgresClient');
+const Status = require('../models/status.model');
+const User = require('../models/user.model');
+const Theme = require('../models/theme.model');
+const Activity = require('../models/activity.model');
+const Challenge = require('../models/challenge.model');
+const Difficulty = require('../models/difficulty.model');
+const Goal = require('../models/goal.model');
+const DailyContent = require('../models/dailycontent.model');
+const GoalDailyContent = require('../models/goal_dailycontent.model');
+const Achievement = require('../models/achievement.model');
 
 const models = [
     Status,

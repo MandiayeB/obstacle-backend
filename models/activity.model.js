@@ -17,8 +17,7 @@ class Activity {
 
         const text = `INSERT INTO ${Activity.tableName}(name, theme_id) VALUES($1, $2)`;
         const values = [name, theme_id];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Activité enregistrée !');
+        await PostgresClient.client.query(text, values);
     }
 
     static toSQLTable() {
@@ -34,5 +33,6 @@ class Activity {
         `;
     }
 }
+
 Activity.tableName = 'activity';
 module.exports = Activity;

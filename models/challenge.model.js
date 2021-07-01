@@ -25,8 +25,7 @@ class Challenge {
         const text = `INSERT INTO ${Challenge.tableName}(name, author, activity_id) 
             VALUES($1, $2, $3)`;
         const values = [name, author, activity_id];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Challenge enregistré !');
+        await PostgresClient.client.query(text, values);
     }
 
     /**
@@ -67,8 +66,8 @@ class Challenge {
      * @returns {Promise<Theme>}
      */
     static async getByGoalId(goal_id) {
-        const res = await PostgresClient.client.query(
-            `SELECT ${Theme.tableName}.name AS theme
+        const text = `
+            SELECT ${Theme.tableName}.name AS theme
             FROM ${Goal.tableName}
             INNER JOIN ${Difficulty.tableName} 
                 ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
@@ -78,10 +77,13 @@ class Challenge {
                 ON ${Challenge.tableName}.activity_id = ${Activity.tableName}.id
             INNER JOIN ${Theme.tableName} 
                 ON ${Activity.tableName}.theme_id = ${Theme.tableName}.id
-            WHERE ${Goal.tableName}.id = $1`, 
-            [goal_id]);
+            WHERE ${Goal.tableName}.id = $1
+        `;
+        const value = [goal_id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
+    
     static toSQLTable() {
         return `
             CREATE TABLE ${Challenge.tableName} (
@@ -99,5 +101,6 @@ class Challenge {
         `;
     }
 }
+
 Challenge.tableName = 'challenge';
 module.exports = Challenge;

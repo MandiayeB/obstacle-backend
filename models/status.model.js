@@ -12,9 +12,8 @@ class Status {
      */
      static async create(role) {
         const text = `INSERT INTO ${Status.tableName}(role) VALUES($1)`;
-        const values = [role];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Rôle enregistré !');
+        const value = [role];
+        await PostgresClient.client.query(text, value);
     }
 
     static toSQLTable() {
@@ -26,5 +25,6 @@ class Status {
         `;
     }
 }
+
 Status.tableName = 'status';
 module.exports = Status;

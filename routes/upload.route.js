@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
-const { upload, storage, multer } = require('../middlewares/multer-config');
+const { upload, multer } = require('../middlewares/multer-config');
+const port = process.env.PORT || 3000;
 
 router.put('/', hasToBeAuthenticated, async(req, res) =>{
     let error = false;
@@ -19,7 +20,7 @@ router.put('/', hasToBeAuthenticated, async(req, res) =>{
             const emailsession = req.session.email;
             await User.uploadPicture(emailsession, picture);
             res.status(201).json({ 
-                url: process.env.PG_CUSTOM_ORIGIN || `https://obstacle-backend.herokuapp.com` + `/pictures/${picture}` 
+                url: (process.env.PORT ? `http://localhost:${port}` : `https://obstacle-backend.herokuapp.com`) + `/pictures/${picture}` 
             });
         } else {
             res.status(501).json({ msg: 'Le serveur ne peut pas stocker cette image.'})

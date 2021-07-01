@@ -36,15 +36,15 @@ class Goal {
      * @returns {Promise<Goal>}
      */
     static async getGoals(user_id) {
-        const res = await PostgresClient.client.query(
-            `SELECT ${Goal.tableName}.id, ${Difficulty.tableName}.title,
-            ${Difficulty.tableName}.image 
-            FROM ${Goal.tableName}
+        const text = `
+            SELECT ${Goal.tableName}.id, ${Difficulty.tableName}.title, ${Difficulty.tableName}.image 
+                FROM ${Goal.tableName}
             INNER JOIN ${Difficulty.tableName} 
-            ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
-            WHERE user_id = $1`,
-            [user_id]
-        );
+                ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
+            WHERE user_id = $1
+        `;
+        const value = [user_id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows;
     }
 
@@ -52,12 +52,9 @@ class Goal {
      * @param {Number} goal_id
      */
     static async getDifficultyId(goal_id){
-        const res = await PostgresClient.client.query(
-            `SELECT difficulty_id
-            FROM ${Goal.tableName}
-            WHERE ${Goal.tableName}.id = $1 `, 
-            [goal_id]
-        );
+        const text = `SELECT difficulty_id FROM ${Goal.tableName} WHERE ${Goal.tableName}.id = $1`;
+        const value = [goal_id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
     
@@ -67,12 +64,9 @@ class Goal {
      * @returns {Promise<Goal>}
      */
      static async checkExistingGoals(user_id, difficulty_id) {
-        const res = await PostgresClient.client.query(
-            `SELECT * FROM ${Goal.tableName} 
-            WHERE user_id = $1 
-            AND difficulty_id = $2`, 
-            [user_id, difficulty_id]
-        );
+        const text = `SELECT * FROM ${Goal.tableName} WHERE user_id = $1 AND difficulty_id = $2`;
+        const values = [user_id, difficulty_id]
+        const res = await PostgresClient.client.query(text, values);
         return res.rows[0];
     }
 
@@ -81,10 +75,9 @@ class Goal {
      * @returns {Promise<Goal>}
      */
     static async getByUserId(user_id) {
-        const res = await PostgresClient.client.query(
-            `SELECT id FROM ${Goal.tableName} WHERE user_id = $1`, 
-            [user_id]
-        );
+        const text = `SELECT id FROM ${Goal.tableName} WHERE user_id = $1`;
+        const value = [user_id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows;
     }
 
@@ -92,11 +85,9 @@ class Goal {
      * @param {Number} goal_id
      */
     static async delete(goal_id) {
-        const { title } = await this.getGoals(userId);
-        const res = await PostgresClient.client.query(`
-            DELETE FROM ${Goal.tableName} WHERE id = $1`, [goal_id]
-        );
-        console.log(`L'objectif ${title} a été supprimé`);
+        const text = `DELETE FROM ${Goal.tableName} WHERE id = $1`;
+        const value = [goal_id];
+        await PostgresClient.client.query(text, value);
     }
 
     static toSQLTable() {
@@ -117,5 +108,6 @@ class Goal {
         `;
     }
 }
+
 Goal.tableName = 'goal';
 module.exports = Goal;

@@ -15,8 +15,7 @@ class Theme {
 
         const text = `INSERT INTO ${Theme.tableName}(name) VALUES($1)`;
         const values = [name];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Thème enregistré !');
+        await PostgresClient.client.query(text, values);
     }
 
     static toSQLTable() {
@@ -28,5 +27,6 @@ class Theme {
         `;
     }
 }
+
 Theme.tableName = 'theme';
 module.exports = Theme;

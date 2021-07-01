@@ -17,24 +17,19 @@ class GoalDailyContent {
      * @param {Number} dailycontent_id
      */
      static async create(validated, goal_id, dailycontent_id) {
-
         const text = `INSERT INTO ${GoalDailyContent.tableName}(validated, goal_id, dailycontent_id) 
             VALUES($1, $2, $3)`;
         const values = [validated, goal_id, dailycontent_id];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Objectif-Jour enregistré !');
+        await PostgresClient.client.query(text, values);
     }
 
     /**
      * @param {Number} gdc_id
      */
      static async validate(gdc_id) {
-        
-        const res = await PostgresClient.client.query(
-            `UPDATE ${GoalDailyContent.tableName} 
-            SET validated = true 
-            WHERE id = $1`, [gdc_id]
-        );
+        const text = `UPDATE ${GoalDailyContent.tableName} SET validated = true WHERE id = $1`;
+        const value = [gdc_id];
+        await PostgresClient.client.query(text, value);
     }
 
     static toSQLTable() {
@@ -54,5 +49,6 @@ class GoalDailyContent {
         `;
     }
 }
+
 GoalDailyContent.tableName = 'goaldailycontent';
 module.exports = GoalDailyContent;

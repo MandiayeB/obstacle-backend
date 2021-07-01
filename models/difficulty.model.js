@@ -30,8 +30,7 @@ class Difficulty {
         const text = `INSERT INTO ${Difficulty.tableName}(level, title, image, length, difficulty, challenge_id) 
             VALUES($1, $2, $3, $4, $5, $6)`;
         const values = [level, title, image, length, difficulty, challenge_id];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Difficulté enregistrée !');
+        await PostgresClient.client.query(text, values);
     }
 
     /**
@@ -39,7 +38,9 @@ class Difficulty {
      * @returns {Promise<Difficulty>}
      */
     static async getById(id) {
-        const res = await PostgresClient.client.query(`SELECT id, length FROM ${Difficulty.tableName} WHERE id = $1`, [id]);
+        const text = `SELECT id, length FROM ${Difficulty.tableName} WHERE id = $1`;
+        const value = [id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
 
@@ -60,5 +61,6 @@ class Difficulty {
         `;
     }
 }
+
 Difficulty.tableName = 'difficulty';
 module.exports = Difficulty;

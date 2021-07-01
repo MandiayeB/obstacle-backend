@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
+const port = process.env.PORT || 3000;
 
 router.post('/', async(req, res) => {
     const { email, password } = req.body;
@@ -14,7 +15,7 @@ router.post('/', async(req, res) => {
                 delete credentials.password;
                 req.session.credentials = credentials;
                 
-                req.session.credentials.picture = process.env.PG_CUSTOM_ORIGIN || `https://obstacle.herokuapp.com` 
+                req.session.credentials.picture = (process.env.PORT ? `http://localhost:${port}` : `https://obstacle.herokuapp.com`) 
                     + `/pictures/${req.session.credentials.picture}`;
 
                 res.status(308).send(req.session.credentials);
