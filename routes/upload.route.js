@@ -19,7 +19,7 @@ router.put('/', hasToBeAuthenticated, async(req, res) =>{
             const emailsession = req.session.email;
             await User.uploadPicture(emailsession, picture);
             res.status(201).json({ 
-                url: process.env.PG_CUSTOM_ORIGIN || `https://obstacle.herokuapp.com` + `/pictures/${picture}` 
+                url: process.env.PG_CUSTOM_ORIGIN || `https://obstacle-backend.herokuapp.com` + `/pictures/${picture}` 
             });
         } else {
             res.status(501).json({ msg: 'Le serveur ne peut pas stocker cette image.'})

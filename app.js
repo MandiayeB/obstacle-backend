@@ -13,7 +13,6 @@ const dailycontentRouter = require('./routes/dailycontent.route');
 const disconnectionRouter = require('./routes/disconnection.route');
 const dashboardRouter = require('./routes/dashboard.route');
 const uploadRouter = require('./routes/upload.route');
-const allowHeaders = require('./middlewares/allowHeaders');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,7 +32,6 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-app.use(allowHeaders);
 app.use('/', homeRouter);
 app.use('/profile', profileRouter);
 app.use('/goal', goalRouter);
