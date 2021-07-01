@@ -18,4 +18,5 @@ class PostgresClient {
         await this.client.connect();
     }
 }
+
 module.exports = new PostgresClient();
