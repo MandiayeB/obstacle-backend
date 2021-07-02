@@ -1,4 +1,4 @@
-const PostgresClient = require('../PostgresClient');
+const PostgresClient = require('../services/PostgresClient');
 const Status = require('../models/status.model');
 const bcrypt = require('bcrypt');
 

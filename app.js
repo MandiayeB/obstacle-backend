@@ -3,7 +3,8 @@ const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-const PostgresClient = require('./PostgresClient');
+const PostgresClient = require('./services/PostgresClient');
+const PostgresqlService = require('./services/PostgresService');
 const homeRouter = require('./routes/home.route');
 const profileRouter = require('./routes/profile.route');
 const goalRouter = require('./routes/goal.route');
@@ -28,9 +29,16 @@ app.use(cors({
 
 app.set('trust proxy', 1);
 app.use(session({
-    secret: 'my secret',
-    resave: false,
+    store: PostgresqlService.sessionHandler(session),
+    secret: 'test',
     saveUninitialized: false,
+    resave: false,
+    unset: 'destroy',
+    cookie: {
+        sameSite: 'Lax',
+        maxAge: 60000,
+        secure: true
+    }
 }));
 
 app.use('/', homeRouter);

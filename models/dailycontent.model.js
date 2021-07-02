@@ -1,4 +1,4 @@
-const PostgresClient = require('../PostgresClient');
+const PostgresClient = require('../services/PostgresClient');
 const Goal = require('./goal.model');
 const GoalDailyContent = require('./goal_dailycontent.model');
 

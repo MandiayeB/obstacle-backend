@@ -1,4 +1,4 @@
-const PostgresClient = require('../PostgresClient');
+const PostgresClient = require('../services/PostgresClient');
 const Status = require('../models/status.model');
 const User = require('../models/user.model');
 const Theme = require('../models/theme.model');
@@ -28,6 +28,15 @@ async function createDb() {
         await PostgresClient.client.query(model.toSQLTable());
         console.log(`Table ${model.tableName} créée avec succès !`);
     }
+    PostgresClient.client.query(`
+        CREATE TABLE IF NOT EXISTS session (
+            sid VARCHAR NOT NULL COLLATE "default",
+            sess JSON NOT NULL,
+            expire TIMESTAMP(6) NOT NULL,
+            CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
+        );
+        CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON session ("expire");
+    `);
 }
 
 async function deleteDb() {
@@ -259,7 +268,7 @@ async function sampleData() {
 }
 
 async function run() {
-    await PostgresClient.init();
+    await PostgresClient.init();/*
     console.log("Connected");
     try {
         await deleteDb();
@@ -267,6 +276,15 @@ async function run() {
         console.log('Un problème est survenu : ' + e.message);
     }
     await createDb();
-    await sampleData();
+    await sampleData();*/
+    PostgresClient.client.query(`
+        CREATE TABLE IF NOT EXISTS session (
+            sid VARCHAR NOT NULL COLLATE "default",
+            sess JSON NOT NULL,
+            expire TIMESTAMP(6) NOT NULL,
+            CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
+        );
+        CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON session ("expire");
+    `);
 }
 run();
