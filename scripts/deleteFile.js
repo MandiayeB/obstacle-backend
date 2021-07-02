@@ -3,7 +3,6 @@ const User = require('../models/user.model');
 
 async function deleteFile(email, file) {
     const { picture } = await User.getPicture(email);
-    console.log(email, picture);
     if (picture) {
         const dir = await fs.promises.opendir('./pictures');
         for await (const image of dir) {
