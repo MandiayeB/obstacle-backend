@@ -73,6 +73,13 @@ class Challenge {
         return res.rows[0].theme;
     }
 
+    static async getByAuthor(author) {
+        const text = `SELECT * FROM ${Challenge.tableName} WHERE author = $1`;
+        const value = [author];
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows;
+    }
+
     /**
      * @param {Number} goal_id
      * @returns {Promise<Theme>}

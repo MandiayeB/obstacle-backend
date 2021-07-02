@@ -12,12 +12,26 @@ router.get('/', hasToBeAuthenticated, async(req, res) => {
    res.json(theme);
 });
 
+
+router.post('/mychallenge', hasToBeAuthenticated, async(req, res) => {
+    const { author } = req.body;
+    const theme = await Theme.getByAuthor(author);
+    res.json(theme);
+});
+
 router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
     const { content, gif, difficulty_id} = req.body;
     const index = await DailyContent.getAllFormId(difficulty_id);
     const order_max = index.length+1;
     await DailyContent.create(content, gif, order_max, difficulty_id)
 });
+
+
+router.post('/update', hasToBeAuthenticated, async (req,res) => {
+    const {id, content, gif } = req.body;
+    await DailyContent.updateDaily(content, gif, id);
+
+})
 
 router.post('/newchallenge', hasToBeAuthenticated, async(req,res) => {
     const { typeDifficulty, gif, duree, titleDifficulty, titleChallenge, activity, author_id } = req.body;
