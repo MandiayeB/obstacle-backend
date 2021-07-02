@@ -30,7 +30,7 @@ router.post('/', hasToBeAuthenticated, async(req,res) => {
         for (let i = 0; i < length; i++) {
             await GoalDailyContent.create(false, create_goal.id, dailyCts[i].id);
         }
-        res.status(204).json({ msg : 'Goal created !' });
+        res.status(204);
     } else {
         res.status(403).json({ msg : 'You have already created a goal with this difficulty' });
     }

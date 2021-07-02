@@ -1,13 +1,17 @@
 const fs = require('fs');
+const User = require('../models/user.model');
 
-async function deleteFile(file) {
-    const pattern = file.slice(0, 13);
-    const dir = await fs.promises.opendir('./pictures');
-    for await (const picture of dir) {
-        if (picture.name.includes(pattern) && picture.name !== file) {
-            await fs.unlink('./pictures/' + picture.name, (err) => {
-                if (err) console.error(err);
-            });
+async function deleteFile(email, file) {
+    const { picture } = await User.getPicture(email);
+    console.log(email, picture);
+    if (picture) {
+        const dir = await fs.promises.opendir('./pictures');
+        for await (const image of dir) {
+            if (image.name === picture && image.name !== file && image.name !== 'defaultProfilePicture.jpg') {
+                await fs.unlink('./pictures/' + image.name, (err) => {
+                    if (err) console.error(err);
+                });
+            }
         }
     }
 }

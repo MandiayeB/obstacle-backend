@@ -12,41 +12,40 @@ router.get('/', hasToBeAuthenticated, async(req,res) => {
 router.put('/editCredentials', async(req,res) => {
 
     const { firstname, lastname, email, emailsession} = req.body;
-    
-        if (firstname) {
-            await User.updateName(emailsession, firstname);
-        }   
-        if (lastname) {
-            await User.updateLastName(emailsession, lastname);
-        }  
-        if (email) {
-            await User.updateEmail(emailsession, email);
-        }
-        res.status(308).json({ msg: 'Redirection vers Profile' });
 
+    if (firstname) {
+        await User.updateName(emailsession, firstname);
+    }   
+    if (lastname) {
+        await User.updateLastName(emailsession, lastname);
+    }  
+    if (email) {
+        await User.updateEmail(emailsession, email);
+    }
+    res.status(308);
 });
 
 router.put('/editPassword', async(req,res) => {
 
     const { oldPassword, newPassword, confirmPassword, emailsession} = req.body;
 
-    if(oldPassword && newPassword && confirmPassword !== undefined) {
+    if (oldPassword && newPassword && confirmPassword !== undefined) {
         const credentials = await User.findByEmail(emailsession);
-        if(credentials){    
+        if (credentials) {    
             const isMatch = await bcrypt.compare(oldPassword, credentials.password);
-            if(isMatch){
-                if(newPassword === confirmPassword){
+            if (isMatch) {
+                if (newPassword === confirmPassword) {
                     const hashPassword = await bcrypt.hash(newPassword,10);
                     await User.updatePassword(emailsession, hashPassword);
-                    res.status(308).json({ msg: 'Redirection vers Profile' });
+                    res.status(308);
                 } else {
-                    res.status(403).json({ msg: 'Les deux mot de passe ne sont pas identique' });
+                    res.status(403).json({ msg: 'Les deux mots de passe ne correspondent pas.' });
                 }
             } else {
-                res.status(403).json({ msg: 'L ancien mot de passe n est pas correct' });
+                res.status(403).json({ msg: 'Mot de passe erroné.' });
             }
         } else {
-            res.status(403).json({ msg: 'J ai pas trouver ton adresse mail dans la BD' });
+            res.status(403);
         }
     }
     

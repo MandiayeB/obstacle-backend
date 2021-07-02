@@ -14,7 +14,7 @@ router.post('/', hasToBeAuthenticated, async(req,res) => {
     const id = await Goal.getDifficultyId(req.body.goal_id);
     const countDailyContent = await DailyContent.countDailyContent(id.difficulty_id);
     if (content) res.status(200).json({ content: content, theme: theme.theme, count: countDailyContent });
-    else res.send('Félicitations, vous avez accompli votre objectif !');
+    else res.status(308).send('Félicitations, vous avez accompli votre objectif !');
 });
 
 router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
@@ -26,7 +26,7 @@ router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
         }
     };
     await Achievement.create(req.body.goal_id, acm);
-    res.status(200).send('Achievement registered.');
+    res.status(204);
 });
 
 module.exports = router;
