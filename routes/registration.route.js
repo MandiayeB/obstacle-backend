@@ -8,7 +8,6 @@ router.post('/', async(req, res) => {
     const picture = "defaultProfilePicture.jpg";
 
     if (firstname && lastname && email && password && confirm && gender && birthdate) {
-        console.log(firstname, lastname, email, hashPassword, confirm, gender, birthdate, picture);
         
         if (await User.findByEmail(email)) {
             res.status(403).json({ msg: 'Cet adresse mail est déjà utilisée.' });

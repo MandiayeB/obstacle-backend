@@ -1,26 +1,30 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 const User = require('../models/user.model');
 const hasToBeAuthenticated = require('../middlewares/hasToBeAuthenticated');
-const { upload, storage, multer } = require('../middlewares/multer-config');
+const { upload, multer } = require('../scripts/multer-config');
+const deleteFile = require('../scripts/deleteFile');
+const port = process.env.PORT || 3000;
 
 router.put('/', hasToBeAuthenticated, async(req, res) =>{
     let error = false;
-    upload(req, res, async function (err) {
+    upload(req, res, async(err) => {
         if (err instanceof multer.MulterError) {
-          // A Multer error occurred when uploading.
-          res.send(err);
-          error = true;
+            res.send(err);
+            error = true;
         } else if (err) {
-          // An unknown error occurred when uploading.
-          res.send(err);
-          error = true;
+            res.send(err);
+            error = true;
         }
-        if (error == false){
+        if (!error) {
             const picture = req.file.filename;
+            await deleteFile(picture);
             const emailsession = req.session.email;
-            const uploadPicture = await User.uploadPicture(emailsession, picture);
-            res.status(201).json({ url: `http://localhost:3000/pictures/${picture}` });
+            await User.uploadPicture(emailsession, picture);
+            res.status(201).json({ 
+                url: (process.env.PORT ? `http://localhost:${port}` : `https://obstacle-backend.herokuapp.com`) + `/pictures/${picture}` 
+            });
         } else {
             res.status(501).json({ msg: 'Le serveur ne peut pas stocker cette image.'})
         }

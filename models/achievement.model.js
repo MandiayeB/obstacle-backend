@@ -18,15 +18,17 @@ class Achievement {
      * @returns {Promise<Achievement>}
      */
     static async getByGoalId(goal_id) {
-        const res = await PostgresClient.client.query(`
+        const text = `
             SELECT achievement, created_at, title FROM ${Achievement.tableName} 
             INNER JOIN ${Goal.tableName} 
-            ON ${Achievement.tableName}.goal_id = ${Goal.tableName}.id
+                ON ${Achievement.tableName}.goal_id = ${Goal.tableName}.id
             INNER JOIN ${Difficulty.tableName} 
-            ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
+                ON ${Goal.tableName}.difficulty_id = ${Difficulty.tableName}.id
             WHERE goal_id = $1
-            ORDER BY created_at ASC;`,
-        [goal_id]);
+            ORDER BY created_at ASC;
+        `;
+        const value = [goal_id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows;
     }
 
@@ -35,12 +37,10 @@ class Achievement {
      * @param {JSON} achievement
      */
     static async create(goal_id, achievement) {
-
         const text = `INSERT INTO ${Achievement.tableName}(goal_id, achievement) 
             VALUES($1, $2)`;
         const values = [goal_id, achievement];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Accomplissement enregistré !');
+        await PostgresClient.client.query(text, values);
     }
 
     static toSQLTable() {
@@ -48,14 +48,15 @@ class Achievement {
             CREATE TABLE ${Achievement.tableName} (
                 id SERIAL PRIMARY KEY,
                 created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-                goal_id INTEGER ON DELETE CASCADE,
+                goal_id INTEGER NOT NULL,
                 achievement JSON,
                 CONSTRAINT fk_goal_id
                     FOREIGN KEY(goal_id)
-                        REFERENCES goal(id)
+                        REFERENCES goal(id) ON DELETE CASCADE
             );
         `;
     }
 }
+
 Achievement.tableName = 'achievement';
 module.exports = Achievement;

@@ -30,8 +30,7 @@ class Difficulty {
         const text = `INSERT INTO ${Difficulty.tableName}(level, title, image, length, difficulty, challenge_id) 
             VALUES($1, $2, $3, $4, $5, $6)`;
         const values = [level, title, image, length, difficulty, challenge_id];
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Difficulté enregistrée !');
+        await PostgresClient.client.query(text, values);
     }
 
     /**
@@ -39,7 +38,9 @@ class Difficulty {
      * @returns {Promise<Difficulty>}
      */
     static async getById(id) {
-        const res = await PostgresClient.client.query(`SELECT id, length FROM ${Difficulty.tableName} WHERE id = $1`, [id]);
+        const text = `SELECT id, length FROM ${Difficulty.tableName} WHERE id = $1`;
+        const value = [id];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
 
@@ -52,13 +53,14 @@ class Difficulty {
                 image VARCHAR(255),
                 length INTEGER,
                 difficulty VARCHAR(255),
-                challenge_id INTEGER ON DELETE CASCADE,
+                challenge_id INTEGER NOT NULL,
                 CONSTRAINT fk_challenge_id
                     FOREIGN KEY(challenge_id)
-                        REFERENCES challenge(id)
+                        REFERENCES challenge(id) ON DELETE CASCADE
             );
         `;
     }
 }
+
 Difficulty.tableName = 'difficulty';
 module.exports = Difficulty;

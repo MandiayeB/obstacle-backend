@@ -36,7 +36,9 @@ class User {
      * @returns {Promise<User>}
      */
     static async getById(userId) {
-        const res = await PostgresClient.client.query(`SELECT * FROM ${User.tableName} WHERE id = $1`, [userId]);
+        const text = `SELECT * FROM ${User.tableName} WHERE id = $1`;
+        const value = [userId];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
 
@@ -45,13 +47,15 @@ class User {
      * @returns {Promise<User>}
      */
     static async findByEmail(email) {
-        const res = await PostgresClient.client.query(`
-            SELECT ${User.tableName}.id AS user_id, firstname, lastname, 
-            email, password, gender, birthdate, picture, ${Status.tableName}.role 
+        const text = `
+            SELECT ${User.tableName}.id AS user_id, firstname, lastname, email, 
+                password, gender, birthdate, picture, ${Status.tableName}.role 
             FROM ${User.tableName} 
             INNER JOIN ${Status.tableName} ON ${User.tableName}.status_id = ${Status.tableName}.id
-            WHERE email = $1`,
-        [email]);
+            WHERE email = $1
+        `;
+        const value = [email];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
 
@@ -71,39 +75,36 @@ class User {
                         VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
         const values = [firstname, lastname, email, password, gender, birthdate, picture, status_id];
 
-        const res = await PostgresClient.client.query(text, values);
-        console.log('Utilisateur enregistré !');
+        await PostgresClient.client.query(text, values);
     }
 
     /**
      * @param {Number} userId
      */
     static async delete(userId) {
-        const { firstName } = this.getById(userId);
-        const res = await PostgresClient.client.query(`DELETE FROM ${User.tableName} WHERE id = $1`, [userId]);
-        console.log(`L'utilisateur : ${firstName} a été supprimé`);
+        const text = `DELETE FROM ${User.tableName} WHERE id = $1`;
+        const value = [userId];
+        await PostgresClient.client.query(text, value);
     }
 
     /**
      * @param {String} emailsession
      * @param {String} newPassword
      */
-    static async updatePassword(emailsession, newPassword) {  
-        
-        const res = await PostgresClient.client.query(`UPDATE ${User.tableName} 
-            SET password = $1 WHERE email = $2`, [newPassword, emailsession]);
-        
+    static async updatePassword(emailsession, newPassword) {
+        const text = `UPDATE ${User.tableName} SET password = $1 WHERE email = $2`;
+        const values = [newPassword, emailsession];
+        await PostgresClient.client.query(text, values);
     }
 
-      /**
+    /**
      * @param {String} emailsession
      * @param {String} name
      */
     static async updateName (emailsession, name) {
-
-        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
-            SET firstname = $1 WHERE email = $2`, [name, emailsession]);
-
+        const text = `UPDATE ${User.tableName} SET firstname = $1 WHERE email = $2`;
+        const values = [name, emailsession];
+        await PostgresClient.client.query(text, values);
     }
 
     /**
@@ -111,10 +112,9 @@ class User {
      * @param {String} lastname
      */
     static async updateLastName (emailsession, lastName) {
-
-        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
-            SET lastname = $1 WHERE email = $2`, [lastName, emailsession]);
-
+        const text = `UPDATE ${User.tableName} SET lastname = $1 WHERE email = $2`;
+        const values = [lastName, emailsession];
+        await PostgresClient.client.query(text, values);
     }
 
     /**
@@ -122,10 +122,9 @@ class User {
      * @param {String} email
      */
     static async updateEmail (emailsession, email) {
-
-        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
-            SET email = $1 WHERE email = $2`, [email, emailsession]);
-
+        const text = `UPDATE ${User.tableName} SET email = $1 WHERE email = $2`;
+        const values = [email, emailsession];
+        await PostgresClient.client.query(text, values);
     }
 
 
@@ -134,18 +133,18 @@ class User {
      * @param {String} picture
      */
      static async uploadPicture (emailsession, picture) {
-
-        const res = await PostgresClient.client.query(`UPDATE ${User.tableName}
-            SET picture = $1 WHERE email = $2`, [ picture, emailsession]);
-
+        const text = `UPDATE ${User.tableName} SET picture = $1 WHERE email = $2`;
+        const values = [picture, emailsession];
+        await PostgresClient.client.query(text, values);
     }
 
     /**
      * @param {String} emailsession
      */
     static async getPicture (emailsession) {
-
-        const res = await PostgresClient.client.query(`SELECT picture FROM ${User.tableName} WHERE email = $1`, [emailsession]);
+        const text = `SELECT picture FROM ${User.tableName} WHERE email = $1`;
+        const value = [emailsession];
+        const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
 
@@ -168,5 +167,6 @@ class User {
         `;
     }
 }
+
 User.tableName = 'users';
 module.exports = User;
