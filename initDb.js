@@ -70,16 +70,46 @@ async function sampleData() {
         1
     );
 
-    await DailyContent.create('Tirez 30 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 1, 1);
-    await DailyContent.create('Tirez 40 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 2, 1);
-    await DailyContent.create('Tirez 50 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 3, 1);
-    await DailyContent.create('Réussissez 30 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 4, 1);
-    await DailyContent.create('Réussissez 40 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 5, 1);
-    await DailyContent.create('Réussissez 50 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 6, 1);
-    await DailyContent.create('Réussissez 60 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 7, 1);
-    await DailyContent.create("Réussissez 10 lancers francs d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 8, 1);
-    await DailyContent.create("Réussissez 15 lancers francs d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 9, 1);
-    await DailyContent.create("Réussissez 25 lancers francs d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', 10, 1);
+    await DailyContent.create('Tirez 30 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 1, 1);
+    await DailyContent.create('Tirez 40 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 2, 1);
+    await DailyContent.create('Tirez 50 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 3, 1);
+    await DailyContent.create('Réussissez 30 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 4, 1);
+    await DailyContent.create('Réussissez 40 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 5, 1);
+    await DailyContent.create('Réussissez 50 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 6, 1);
+    await DailyContent.create('Réussissez 60 lancers francs.', 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 7, 1);
+    await DailyContent.create("Réussissez 10 lancers francs d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 8, 1);
+    await DailyContent.create("Réussissez 15 lancers francs d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 9, 1);
+    await DailyContent.create("Réussissez 25 lancers francs d'affilé, en cas d'échec recommencez à zéro.", 'https://media.giphy.com/media/3oGRFfGQXanXsgQ2bK/giphy.gif', {
+        guide1: { url: 'https://www.youtube.com/embed/fWuUXG6ecSQ', text: 'Aide pour ce challenge :'},
+        guide2: { url: 'https://www.youtube.com/embed/Fg0j2P-OL7I', text: 'Des conseils pour l\'équipement :' },
+        }, 10, 1);
     
     await DailyContent.create('Réalisez 30 tirs à mi-distance.', 'https://media.giphy.com/media/9JrzoEG42sBPEErd2v/giphy.gif', 1, 2);
     await DailyContent.create('Réalisez 40 tirs à mi-distance.', 'https://media.giphy.com/media/9JrzoEG42sBPEErd2v/giphy.gif',  2, 2);

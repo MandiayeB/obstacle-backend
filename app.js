@@ -12,6 +12,7 @@ const dailycontentRouter = require('./routes/dailycontent.route');
 const disconnectionRouter = require('./routes/disconnection.route');
 const dashboardRouter = require('./routes/dashboard.route');
 const uploadRouter = require('./routes/upload.route');
+const { NONAME } = require('dns');
 
 const app = express();
 const port = process.env.PORT || 3000;

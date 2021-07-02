@@ -69,12 +69,23 @@ class DailyContent {
         return res.rows[0];
     }
 
+    static async getGuideById(goal_id){
+        const res = await PostgresClient.client.query(`
+        SELECT 
+        FROM ${DailyContent.tableName}
+        WHERE difficulty_id = $1`,
+        [difficulty_id]
+    );
+    return res.rows[0];
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${DailyContent.tableName} (
                 id SERIAL PRIMARY KEY,
                 content TEXT,
                 image VARCHAR(255),
+                guide JSON,
                 order_index INTEGER,
                 difficulty_id INTEGER ON DELETE CASCADE,
                 CONSTRAINT fk_difficulty_id
