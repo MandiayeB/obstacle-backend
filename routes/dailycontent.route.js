@@ -46,5 +46,9 @@ router.post('/daily', hasToBeAuthenticated, async(req,res) => {
     const dailycontent = await DailyContent.getAllFormId(difficulty_id);
     res.json(dailycontent);
 })
+router.post('/goaldeletion', hasToBeAuthenticated, async(req, res) => {
+    await Goal.delete(req.body.goal_id);
+    res.status(205).send('Le goal a été supprimé');
+});
 
 module.exports = router;
