@@ -47,8 +47,10 @@ class Difficulty {
      * @param {Number} challenge_id
      * @returns {Promise<Difficulty>}
      */
-    static async getByChallengeId() {
-        const res = await PostgresClient.client.query(`SELECT * FROM ${Difficulty.tableName}`);  
+    static async getByChallengeId(id) {
+        const text = `SELECT * FROM ${Difficulty.tableName} WHERE challenge_id = $1`;
+        const value = [id];
+        const res = await PostgresClient.client.query(text, value);  
         return res.rows;  
     }
     

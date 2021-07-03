@@ -8,9 +8,16 @@ const Difficulty = require ('../models/difficulty.model')
 const router = express.Router();
 
 router.get('/', hasToBeAuthenticated, async(req, res) => {
-   const theme = await Theme.showOptions();
-   res.json(theme);
+    const theme = await Theme.showOptions();
+    res.json(theme);
 });
+
+router.post('/difficulty', hasToBeAuthenticated, async(req, res) => {
+    const { challenge } = req.body;
+    const challengeId = await Challenge.getByChallengeTitle(challenge[0]);
+    const difficulty = await Difficulty.getByChallengeId(challengeId.id);
+    res.json(difficulty);
+})
 
 
 router.post('/mychallenge', hasToBeAuthenticated, async(req, res) => {
@@ -29,6 +36,7 @@ router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
 
 router.post('/update', hasToBeAuthenticated, async (req,res) => {
     const {id, content, gif } = req.body;
+    console.log(content,gif,id)
     await DailyContent.updateDaily(content, gif, id);
 
 })
@@ -38,7 +46,7 @@ router.post('/newchallenge', hasToBeAuthenticated, async(req,res) => {
     const { id: activity_id } = await Activity.getByName(activity);
     await Challenge.create(titleChallenge, author_id, activity_id);
     const challenge_id = await Challenge.getByChallengeTitle(titleChallenge);
-    await Difficulty.create(1, titleDifficulty, gif, duree, typeDifficulty, challenge_id[0].id);
+    await Difficulty.create(1, titleDifficulty, gif, duree, typeDifficulty, challenge_id.id);
 });
 
 module.exports = router;
