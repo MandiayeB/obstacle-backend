@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 const PostgresClient = require('./services/PostgresClient');
-const PostgresqlService = require('./services/PostgresService');
+const sessionConfig = require('./services/sessionConfig');
 const homeRouter = require('./routes/home.route');
 const profileRouter = require('./routes/profile.route');
 const goalRouter = require('./routes/goal.route');
@@ -28,18 +28,7 @@ app.use(cors({
 }));
 
 app.set('trust proxy', 1);
-app.use(
-    session({
-        secret: 'my secret',
-        resave: false,
-        saveUninitialized: false,
-        cookie: { 
-            secure: process.env.NODE_ENV === "development" ? false : true,
-            maxAge: 1000 * 60 * 60 * 24
-        },
-        PostgresClient
-    })
-);
+app.use(session(sessionConfig));
 
 app.use('/', homeRouter);
 app.use('/profile', profileRouter);

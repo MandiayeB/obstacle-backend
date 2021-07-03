@@ -9,6 +9,7 @@ const Goal = require('../models/goal.model');
 const DailyContent = require('../models/dailycontent.model');
 const GoalDailyContent = require('../models/goal_dailycontent.model');
 const Achievement = require('../models/achievement.model');
+const Session = require('../models/session.model');
 
 const models = [
     Status,
@@ -20,7 +21,8 @@ const models = [
     Goal,
     DailyContent,
     GoalDailyContent,
-    Achievement
+    Achievement,
+    Session
 ];
 
 async function createDb() {
@@ -28,15 +30,6 @@ async function createDb() {
         await PostgresClient.client.query(model.toSQLTable());
         console.log(`Table ${model.tableName} créée avec succès !`);
     }
-    PostgresClient.client.query(`
-        CREATE TABLE IF NOT EXISTS session (
-            sid VARCHAR NOT NULL COLLATE "default",
-            sess JSON NOT NULL,
-            expire TIMESTAMP(6) NOT NULL,
-            CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
-        );
-        CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON session ("expire");
-    `);
 }
 
 async function deleteDb() {
@@ -278,14 +271,5 @@ async function run() {
     }
     await createDb();
     await sampleData();
-    /*PostgresClient.client.query(`
-        CREATE TABLE IF NOT EXISTS session (
-            sid VARCHAR NOT NULL COLLATE "default",
-            sess JSON NOT NULL,
-            expire TIMESTAMP(6) NOT NULL,
-            CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
-        );
-        CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON session ("expire");
-    `);*/
 }
 run();
