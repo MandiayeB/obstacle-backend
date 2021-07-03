@@ -11,7 +11,6 @@ router.post('/', async(req, res) => {
             const isMatch = await bcrypt.compare(password, credentials.password);
             if (isMatch) {
                 req.session.authenticated = true;
-                req.session.email = email;
                 delete credentials.password;
                 req.session.credentials = credentials;
                 

@@ -29,16 +29,9 @@ app.use(cors({
 
 app.set('trust proxy', 1);
 app.use(session({
-    store: PostgresqlService.sessionHandler(session),
-    secret: 'test',
-    saveUninitialized: false,
+    secret: 'my secret',
     resave: false,
-    unset: 'destroy',
-    cookie: {
-        sameSite: 'Lax',
-        maxAge: 60000,
-        secure: true
-    }
+    saveUninitialized: false
 }));
 
 app.use('/', homeRouter);

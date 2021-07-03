@@ -17,10 +17,10 @@ router.put('/', hasToBeAuthenticated, async(req, res) =>{
             error = true;
         }
         if (!error) {
+            const email = req.session.credentials.email;
             const picture = req.file.filename;
-            const emailsession = req.session.email;
-            await deleteFile(emailsession, picture);
-            await User.uploadPicture(emailsession, picture);
+            await deleteFile(email, picture);
+            await User.uploadPicture(email, picture);
             res.status(201).json({ 
                 url: (process.env.PORT ? `http://localhost:${port}` : `https://obstacle-backend.herokuapp.com`) + `/pictures/${picture}` 
             });

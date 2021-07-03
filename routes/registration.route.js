@@ -18,7 +18,7 @@ router.post('/', async(req, res) => {
                 req.session.authenticated = true;
                 delete credentials.password;
                 req.session.credentials = credentials;
-                res.status(308);
+                res.status(308).send("Les informations sont valides, nous vous redirigeons vers la page de connexion.");
             } else {
                 res.status(403).json({ msg: 'Les mots de passe ne correspondent pas.' });
             }

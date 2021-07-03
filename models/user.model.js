@@ -129,12 +129,12 @@ class User {
 
 
     /**
-     * @param {String} emailsession
+     * @param {String} email
      * @param {String} picture
      */
-     static async uploadPicture (emailsession, picture) {
+     static async uploadPicture (email, picture) {
         const text = `UPDATE ${User.tableName} SET picture = $1 WHERE email = $2`;
-        const values = [picture, emailsession];
+        const values = [picture, email];
         await PostgresClient.client.query(text, values);
     }
 
