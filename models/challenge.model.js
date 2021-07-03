@@ -29,6 +29,17 @@ class Challenge {
     }
 
     /**
+     * @param {String} challenge_title
+     */
+    static async getByChallengeTitle(challenge_title) {
+        const text =`SELECT id FROM ${Challenge.tableName} WHERE name = $1`
+        const value = [challenge_title]
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows[0];
+    
+    }
+
+    /**
      * @returns {Promise<JSON>}
      */
     static async showOptions() {
@@ -59,6 +70,13 @@ class Challenge {
             INNER JOIN ${Theme.tableName} ON ${Activity.tableName}.theme_id = ${Theme.tableName}.id
         `);
         return res.rows[0].theme;
+    }
+
+    static async getByAuthor(author) {
+        const text = `SELECT * FROM ${Challenge.tableName} WHERE author = $1`;
+        const value = [author];
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows;
     }
 
     /**
