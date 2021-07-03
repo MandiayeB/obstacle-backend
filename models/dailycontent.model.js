@@ -10,6 +10,8 @@ class DailyContent {
     content;
     /**@type {String} */
     image;
+    /**@type {JSON} */
+    guide;
     /**@type {Number} */
     order;
     /**@type {Number} */
@@ -18,13 +20,14 @@ class DailyContent {
     /**
      * @param {String} content
      * @param {String} image
+     * @param {JSON} guide
      * @param {Number} order
      * @param {Number} difficulty_id
      */
-     static async create(content, image, order, difficulty_id) {
-        const text = `INSERT INTO ${DailyContent.tableName}(content, image, order_index, difficulty_id) 
-            VALUES($1, $2, $3, $4)`;
-        const values = [content, image, order, difficulty_id];
+     static async create(content, image, guide, order, difficulty_id) {
+        const text = `INSERT INTO ${DailyContent.tableName}(content, image, guide, order_index, difficulty_id) 
+            VALUES($1, $2, $3, $4, $5)`;
+        const values = [content, image, guide, order, difficulty_id];
         await PostgresClient.client.query(text, values);
     }
 
@@ -34,7 +37,7 @@ class DailyContent {
      */
      static async retrieve(goal_id) {
         const text = `
-            SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image, order_index 
+            SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image, guide, order_index 
                 FROM ${GoalDailyContent.tableName} 
             INNER JOIN ${Goal.tableName} 
                 ON ${GoalDailyContent.tableName}.goal_id = ${Goal.tableName}.id
@@ -69,12 +72,26 @@ class DailyContent {
         return res.rows[0];
     }
 
+    /**
+     * @param {Number} goal_id
+     */
+    static async getGuideById(goal_id){
+        const res = await PostgresClient.client.query(`
+            SELECT guide
+            FROM ${DailyContent.tableName}
+            WHERE goal_id = $1`,
+            [goal_id]
+        );
+        return res.rows[0];
+    }
+
     static toSQLTable() {
         return `
             CREATE TABLE ${DailyContent.tableName} (
                 id SERIAL PRIMARY KEY,
                 content TEXT,
                 image VARCHAR(255),
+                guide JSON,
                 order_index INTEGER,
                 difficulty_id INTEGER NOT NULL,
                 CONSTRAINT fk_difficulty_id

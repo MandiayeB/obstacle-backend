@@ -28,11 +28,18 @@ app.use(cors({
 }));
 
 app.set('trust proxy', 1);
-app.use(session({
-    secret: 'my secret',
-    resave: false,
-    saveUninitialized: false
-}));
+app.use(
+    session({
+        secret: 'my secret',
+        resave: false,
+        saveUninitialized: false,
+        cookie: { 
+            secure: process.env.NODE_ENV === "development" ? false : true,
+            maxAge: 1000 * 60 * 60 * 24
+        },
+        PostgresClient
+    })
+);
 
 app.use('/', homeRouter);
 app.use('/profile', profileRouter);

@@ -22,7 +22,7 @@ router.put('/editCredentials', async(req,res) => {
     if (email) {
         await User.updateEmail(emailsession, email);
     }
-    res.status(308);
+    res.status(308).send('Informations mises à jour');
 });
 
 router.put('/editPassword', async(req,res) => {
@@ -37,7 +37,7 @@ router.put('/editPassword', async(req,res) => {
                 if (newPassword === confirmPassword) {
                     const hashPassword = await bcrypt.hash(newPassword,10);
                     await User.updatePassword(emailsession, hashPassword);
-                    res.status(308);
+                    res.status(308).send('Mot de passe mis à jour');
                 } else {
                     res.status(403).json({ msg: 'Les deux mots de passe ne correspondent pas.' });
                 }
