@@ -27,7 +27,7 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        aameSite: true,
+        sameSite: true,
         secure: process.env.PG_SSL ? false : true
     }
 }
