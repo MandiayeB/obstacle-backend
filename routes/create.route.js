@@ -30,6 +30,7 @@ router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
     const { content, gif, difficulty_id, textyoutube, youtube } = req.body;
     let urlYoutube="https://www.youtube.com/embed/";
     let watch = youtube.indexOf("watch?v=");
+    let embedUrl = "";
     if(watch !== -1){
         embedUrl = youtube.split('watch?v=');
         let list = embedUrl[1].indexOf("&list");
@@ -39,11 +40,17 @@ router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
         } else { 
             embedUrl = urlYoutube+embedUrl[1];
         }
-    } else{
+    } else {
         embedUrl = youtube.split('youtu.be/')
-        embedUrl = embedUrl[1].split('?');
-        embedUrl = urlYoutube+embedUrl[0];
+        let youtu = embedUrl[1].indexOf('?');
+        if(youtu !== -1) {
+            embedUrl = embedUrl[1].split('?');
+            embedUrl = urlYoutube+embedUrl[0];
+        } else {
+            embedUrl = urlYoutube+embedUrl[1];
+        }
     }
+    console.log(embedUrl);
     const index = await DailyContent.getAllFormId(difficulty_id);
     const order_max = index.length+1;
     let id_difficulty = parseInt(difficulty_id);
