@@ -1,6 +1,5 @@
 const PostgresClient = require('../services/PostgresClient');
 const Status = require('../models/status.model');
-const bcrypt = require('bcrypt');
 
 class User {
 
@@ -101,7 +100,7 @@ class User {
      * @param {String} emailsession
      * @param {String} name
      */
-    static async updateName (emailsession, name) {
+    static async updateName(emailsession, name) {
         const text = `UPDATE ${User.tableName} SET firstname = $1 WHERE email = $2`;
         const values = [name, emailsession];
         await PostgresClient.client.query(text, values);
@@ -111,7 +110,7 @@ class User {
      * @param {String} emailsession
      * @param {String} lastname
      */
-    static async updateLastName (emailsession, lastName) {
+    static async updateLastName(emailsession, lastName) {
         const text = `UPDATE ${User.tableName} SET lastname = $1 WHERE email = $2`;
         const values = [lastName, emailsession];
         await PostgresClient.client.query(text, values);
@@ -121,18 +120,17 @@ class User {
      * @param {String} emailsession
      * @param {String} email
      */
-    static async updateEmail (emailsession, email) {
+    static async updateEmail(emailsession, email) {
         const text = `UPDATE ${User.tableName} SET email = $1 WHERE email = $2`;
         const values = [email, emailsession];
         await PostgresClient.client.query(text, values);
     }
 
-
     /**
      * @param {String} email
      * @param {String} picture
      */
-     static async uploadPicture (email, picture) {
+     static async uploadPicture(email, picture) {
         const text = `UPDATE ${User.tableName} SET picture = $1 WHERE email = $2`;
         const values = [picture, email];
         await PostgresClient.client.query(text, values);
@@ -141,11 +139,27 @@ class User {
     /**
      * @param {String} emailsession
      */
-    static async getPicture (emailsession) {
+    static async getPicture(emailsession) {
         const text = `SELECT picture FROM ${User.tableName} WHERE email = $1`;
         const value = [emailsession];
         const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
+    }
+
+    /**
+     * @param {Number} user_id
+     * @returns {Boolean}
+     */
+    static async isAdmin(user_id) {
+        const text = `
+            SELECT role FROM ${User.tableName} 
+            INNER JOIN ${Status.tableName} 
+            ON ${User.tableName}.status_id = ${Status.tableName}.id
+            WHERE ${User.tableName}.id = $1
+        `;
+        const value = [user_id];
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows[0].role;
     }
 
     static toSQLTable() {

@@ -62,6 +62,23 @@ class DailyContent {
         return res.rows;
     }
 
+    static async updateDaily(content, gif, id) {
+        const text = `UPDATE ${DailyContent.tableName} SET content=$1, image=$2 WHERE id=$3`
+        const values = [content, gif, id];
+        await PostgresClient.client.query(text, values);
+    }
+
+    /**
+     * @param {Number} id
+     * @returns {Promise<DailyContent>}
+     */
+    static async getAllFormId(id) {
+        const text = `SELECT * FROM ${DailyContent.tableName} WHERE difficulty_id = $1 ORDER BY order_index`;
+        const value = [id];
+        const res = await PostgresClient.client.query(text, value);
+        return res.rows;
+    }
+
     /**
      * @param {Number} difficulty_id
      */

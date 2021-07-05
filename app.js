@@ -14,6 +14,7 @@ const dailycontentRouter = require('./routes/dailycontent.route');
 const disconnectionRouter = require('./routes/disconnection.route');
 const dashboardRouter = require('./routes/dashboard.route');
 const uploadRouter = require('./routes/upload.route');
+const createRouter = require ('./routes/create.route');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,7 +33,7 @@ app.use(session(sessionConfig));
 
 app.use('/', homeRouter);
 app.use('/profile', profileRouter);
-app.use('/goal', goalRouter);
+app.use('/goal', goalRouter);   
 app.use('/login', connectionRouter);
 app.use('/signin', registrationRouter);
 app.use('/dailycontent', dailycontentRouter);
@@ -40,6 +41,7 @@ app.use('/disconnection', disconnectionRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/upload', uploadRouter);
 app.use('/pictures', express.static(path.join(__dirname, 'pictures')));
+app.use('/create', createRouter);
 
 app.listen(port, () => {
     console.log('Express server is up!');

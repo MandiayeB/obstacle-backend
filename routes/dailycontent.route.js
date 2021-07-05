@@ -31,4 +31,14 @@ router.post('/achievement', hasToBeAuthenticated, async(req,res) => {
     res.status(200).json({ acm: acm });
 });
 
+router.post('/daily', hasToBeAuthenticated, async(req,res) => {
+    const { difficulty_id } = req.body;
+    const dailycontent = await DailyContent.getAllFormId(difficulty_id);
+    res.json(dailycontent);
+})
+router.post('/goaldeletion', hasToBeAuthenticated, async(req, res) => {
+    await Goal.delete(req.body.goal_id);
+    res.status(205).send('Le goal a été supprimé');
+});
+
 module.exports = router;

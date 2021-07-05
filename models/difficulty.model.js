@@ -43,6 +43,28 @@ class Difficulty {
         const res = await PostgresClient.client.query(text, value);
         return res.rows[0];
     }
+    /**
+     * @param {Number} length
+     * @param {Number} length
+     * @returns {Promise<Difficulty>}
+     */
+     static async UpdateLength(length,id) {
+        const text = `UPDATE ${Difficulty.tableName} SET length=$1 WHERE id=$2`;
+        const value = [length,id];
+        await PostgresClient.client.query(text, value);
+    }
+
+    /**
+     * @param {Number} challenge_id
+     * @returns {Promise<Difficulty>}
+     */
+    static async getByChallengeId(id) {
+        const text = `SELECT * FROM ${Difficulty.tableName} WHERE challenge_id = $1`;
+        const value = [id];
+        const res = await PostgresClient.client.query(text, value);  
+        return res.rows;  
+    }
+    
 
     static toSQLTable() {
         return `
