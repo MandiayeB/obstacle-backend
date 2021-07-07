@@ -55,7 +55,7 @@ async function sampleData() {
     );
     await Difficulty.create(
         2,
-        'Tirer à mi-distance',
+        'Le tir à mi-distance',
         'https://media.giphy.com/media/3oz8xMYmD6g5xbCSHu/giphy.gif',
         20,
         'moyenne',
@@ -63,7 +63,7 @@ async function sampleData() {
     );
     await Difficulty.create(
         3,
-        'Tirer à 3 points', 
+        'Le tir à 3 points', 
         'https://media.giphy.com/media/xT1XGCwOkQ2Ua5Zv5C/giphy.gif',
         30,
         'difficile',
@@ -135,8 +135,8 @@ async function sampleData() {
 
     /* Cuisine */
     await Theme.create('Cuisine');
-    await Activity.create('Sucré Salé', 2);
-    await Challenge.create('Apprendre à cuisiner', 1, 2);
+    await Activity.create('Apprendre à cuisiner', 2);
+    await Challenge.create('Les fondamentaux', 1, 2);
     await Difficulty.create(
         1, 
         'Les essentiels',
@@ -147,7 +147,7 @@ async function sampleData() {
     );
     await Difficulty.create(
         2,
-        'Plats complexes',
+        'Les fondamentaux',
         'https://media.giphy.com/media/l0MYN1vN4aWy9vXpK/giphy.gif',
         10,
         'moyenne',
@@ -155,7 +155,7 @@ async function sampleData() {
     );
     await Difficulty.create(
         3,
-        'Pâtisserie', 
+        'La pâtisserie', 
         'https://media.giphy.com/media/ARAVYYOfzdFiYghGfa/giphy.gif',
         10,
         'difficile',
@@ -197,11 +197,11 @@ async function sampleData() {
 
     // /* Informatique */
     await Theme.create('Informatique');
-    await Activity.create('Développer en s\'amusant', 3);
-    await Challenge.create('Apprendre à développer', 1, 3);
+    await Activity.create('Apprendre à développer', 3);
+    await Challenge.create('Développer en s\'amusant', 1, 3);
     await Difficulty.create(
         1, 
-        'HTML et CSS',
+        'L\'HTML et le CSS',
         'https://media.giphy.com/media/cn2noc6qR0HjAfVzmn/giphy.gif',
         10,
         'facile',
@@ -209,7 +209,7 @@ async function sampleData() {
     );
     await Difficulty.create(
         2,
-        'Javascript',
+        'Le javascript',
         'https://media.giphy.com/media/PiQejEf31116URju4V/giphy.gif',
         10,
         'moyenne',
@@ -217,7 +217,7 @@ async function sampleData() {
     );
     await Difficulty.create(
         3,
-        'Java', 
+        'Le java', 
         'https://media.giphy.com/media/QX6ruFElzFdeIfblrg/giphy.gif',
         10,
         'difficile',
