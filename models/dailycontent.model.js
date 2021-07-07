@@ -1,4 +1,4 @@
-const PostgresClient = require('../PostgresClient');
+const PostgresClient = require('../services/PostgresClient');
 const Goal = require('./goal.model');
 const GoalDailyContent = require('./goal_dailycontent.model');
 
@@ -37,7 +37,7 @@ class DailyContent {
      */
      static async retrieve(goal_id) {
         const text = `
-            SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image, guide ,order_index 
+            SELECT ${GoalDailyContent.tableName}.id AS gdc_id, validated, content, image, guide, order_index 
                 FROM ${GoalDailyContent.tableName} 
             INNER JOIN ${Goal.tableName} 
                 ON ${GoalDailyContent.tableName}.goal_id = ${Goal.tableName}.id

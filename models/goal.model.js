@@ -1,4 +1,4 @@
-const PostgresClient = require('../PostgresClient');
+const PostgresClient = require('../services/PostgresClient');
 const Difficulty = require('./difficulty.model');
 
 class Goal {

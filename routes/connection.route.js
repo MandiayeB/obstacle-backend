@@ -11,11 +11,10 @@ router.post('/', async(req, res) => {
             const isMatch = await bcrypt.compare(password, credentials.password);
             if (isMatch) {
                 req.session.authenticated = true;
-                req.session.email = email;
                 delete credentials.password;
                 req.session.credentials = credentials;
                 
-                req.session.credentials.picture = (process.env.PORT ? `http://localhost:${port}` : `https://obstacle.herokuapp.com`) 
+                req.session.credentials.picture = (process.env.PG_SSL ? `http://localhost:${port}` : `https://obstacle.herokuapp.com`) 
                     + `/pictures/${req.session.credentials.picture}`;
 
                 res.status(308).send(req.session.credentials);

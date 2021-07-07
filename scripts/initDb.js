@@ -1,4 +1,4 @@
-const PostgresClient = require('../PostgresClient');
+const PostgresClient = require('../services/PostgresClient');
 const Status = require('../models/status.model');
 const User = require('../models/user.model');
 const Theme = require('../models/theme.model');
@@ -9,6 +9,7 @@ const Goal = require('../models/goal.model');
 const DailyContent = require('../models/dailycontent.model');
 const GoalDailyContent = require('../models/goal_dailycontent.model');
 const Achievement = require('../models/achievement.model');
+const Session = require('../models/session.model');
 
 const models = [
     Status,
@@ -20,7 +21,8 @@ const models = [
     Goal,
     DailyContent,
     GoalDailyContent,
-    Achievement
+    Achievement,
+    Session
 ];
 
 async function createDb() {
@@ -40,6 +42,7 @@ async function deleteDb() {
 async function sampleData() {
 
     Status.create('Admin');
+    Status.create('User');
     await User.create('Mandiaye', 'Badiane', 'mandiayeee@gmail.com', 'oui', 'Homme', '1999-04-02', 1);
     await Theme.create('Sport');
     await Activity.create('Basketball', 1);

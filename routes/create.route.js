@@ -27,14 +27,36 @@ router.post('/mychallenge', hasToBeAuthenticated, async(req, res) => {
 });
 
 router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
-    const { content, gif, difficulty_id } = req.body;
+    const { content, gif, difficulty_id, textyoutube, youtube } = req.body;
+    let urlYoutube = "https://www.youtube.com/embed/";
+    let watch = youtube.indexOf("watch?v=");
+    let embedUrl = "";
+    if (watch !== -1) {
+        embedUrl = youtube.split('watch?v=');
+        let list = embedUrl[1].indexOf("&list");
+        if (list !== -1) {
+            embedUrl = embedUrl[1].split('&list');
+            embedUrl = urlYoutube + embedUrl[0];
+        } else {
+            embedUrl = urlYoutube + embedUrl[1];
+        }
+    } else {
+        embedUrl = youtube.split('youtu.be/')
+        let youtu = embedUrl[1].indexOf('?');
+        if (youtu !== -1) {
+            embedUrl = embedUrl[1].split('?');
+            embedUrl = urlYoutube + embedUrl[0];
+        } else {
+            embedUrl = urlYoutube + embedUrl[1];
+        }
+    }
     const index = await DailyContent.getAllFormId(difficulty_id);
     const order_max = index.length+1;
     let id_difficulty = parseInt(difficulty_id);
-    let guide = '{"guide1": { "url": "https://www.youtube.com/embed/XgVADKKb4jI&t=316s", "text": "Aide pour ce challenge :"}, "guide2": {"url": "https://www.youtube.com/embed/MqLQzOndBbU" , "text":"Des conseils pour vous équiper :"}}';
+    let guide = '{"guide1": { "url": "'+embedUrl+'", "text": "'+textyoutube+' :"}, "guide2": {"url": "https://www.youtube.com/embed/MqLQzOndBbU" , "text":"Des conseils pour vous équiper :"}}';
     await DailyContent.create(content, gif, guide, order_max, id_difficulty);
     const length = await Difficulty.getById(id_difficulty);
-    await Difficulty.UpdateLength(length.length+1, id_difficulty);
+    await Difficulty.UpdateLength(length.length + 1, id_difficulty);
     
 });
 

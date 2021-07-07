@@ -8,9 +8,8 @@ router.post('/', async(req, res) => {
     const picture = "defaultProfilePicture.jpg";
 
     if (firstname && lastname && email && password && confirm && gender && birthdate) {
-        
         if (await User.findByEmail(email)) {
-            res.status(403).json({ msg: 'Cet adresse mail est déjà utilisée.' });
+            res.status(403).json({ msg: 'Cette adresse mail est déjà utilisée.' });
 
         } else {
             if (password === confirm) {
@@ -26,7 +25,6 @@ router.post('/', async(req, res) => {
         }
         
     } else {
-        console.log(firstname, lastname, email, password, confirm, gender, birthdate);
         res.status(403).json({ msg: 'Les informations sont éronnées.' });
     }
 });
