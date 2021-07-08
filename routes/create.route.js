@@ -53,7 +53,7 @@ router.post('/dailycontent', hasToBeAuthenticated, async (req,res) => {
     const index = await DailyContent.getAllFormId(difficulty_id);
     const order_max = index.length+1;
     let id_difficulty = parseInt(difficulty_id);
-    let guide = '{"guide1": { "url": "'+embedUrl+'", "text": "'+textyoutube+' :"}, "guide2": {"url": "https://www.youtube.com/embed/MqLQzOndBbU" , "text":"Des conseils pour vous équiper :"}}';
+    let guide = '{"guide1": { "url": "'+embedUrl+'", "text": "'+textyoutube+' :"}, "guide2": {"url": "https://www.youtube.com/embed/Fg0j2P-OL7I" , "text":"Des conseils pour vous équiper :"}}';
     await DailyContent.create(content, gif, guide, order_max, id_difficulty);
     const length = await Difficulty.getById(id_difficulty);
     await Difficulty.UpdateLength(length.length + 1, id_difficulty);
